@@ -4,6 +4,9 @@
 (setq c-default-style "linux"
       c-basic-offset 4)
 
+; Dired Mode
+(setq dired-listing-switches "-alh")
+
 ; Go Mode
 (load "go-mode.el")
 
