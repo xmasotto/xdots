@@ -1,0 +1,29 @@
+#!/bin/bash
+source ~/.bashrc.d/util
+
+function emacs_server_process() {
+    ps aux | grep '/usr/bin/emacs --daemon' | grep -v 'grep'
+}
+
+function emacs_server_pid() {
+    arg_list "`emacs_server_process | filter_pids`"
+}
+
+function emacs_client_processes() {
+    ps aux | grep 'emacsclient' | grep -v 'grep'
+}
+
+function emacs_client_pids() {
+    arg_list "`emacs_client_processes | filter_pids`"
+}
+
+function el {
+    emacsclient -e "$*" | sed -e 's/^"\(.*\)"$/\1/g' \
+	-e 's/\\n/\n/g' \
+	-e 's/\\"/"/g' \
+	-e 's/\\\\/\\/g'
+}
+
+function ehist {
+    el '(minibuffer-shell-history)' | tail -n ${1-10}
+}

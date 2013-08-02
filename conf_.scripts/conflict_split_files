@@ -1,0 +1,84 @@
+#!/usr/bin/python
+import os
+import sys
+import re
+
+div_gt = ">>>>+.*?"
+div_lt = "<<<<+.*?"
+div_eq = "====+.*?"
+div_pipe = "\|\|\|\|+.*?"
+inner_code = "(.*?)"
+
+def filename_between(filename, text):
+  base, ext = os.path.splitext(filename)
+  return base + text + ext
+
+def main():
+  if len(sys.argv) != 3:
+    print("Usage: conflict_split_files COMMAND FILE")
+
+  elif sys.argv[1] == "create":
+    merge_functions = [
+        maybe_p4_conflict_split,
+        maybe_diff3_conflict_split,
+        maybe_git_conflict_split
+    ]
+    filename = sys.argv[2]
+    text = open(filename, 'r').read()
+    valid = False
+    for func in merge_functions:
+      if func(filename, text):
+        valid = True
+        break
+    print("Created the files!" if valid else "Invalid file.")
+
+  elif sys.argv[1] == "delete":
+    filename = sys.argv[2]
+    os.remove(filename_between(filename, "#theirs#"))
+    os.remove(filename_between(filename, "#yours#"))
+
+  else:
+    print("config_split_files: command {} not found".format(
+        sys.argv[1]))
+
+def maybe_p4_conflict_split(filename, text):
+  p4_conflict = re.compile("{0}\n{4}{2}\n{4}{2}\n{4}{1}\n?".format(
+      div_gt, div_lt, div_eq, div_pipe, inner_code), re.DOTALL)
+  if re.findall(p4_conflict, text):
+    print("Perforce Merge Detected.")
+    open(filename_between(filename, "#theirs#"), 'w').write(
+        re.sub(p4_conflict, r'\2', text))
+    open(filename_between(filename, "#yours#"), 'w').write(
+        re.sub(p4_conflict, r'\3', text))
+    return True
+  else:
+    return False
+
+def maybe_diff3_conflict_split(filename, text):
+  d3_conflict = re.compile("{1}\n{4}{3}\n{4}{2}\n{4}{0}\n".format(
+      div_gt, div_lt, div_eq, div_pipe, inner_code), re.DOTALL)
+  if re.findall(d3_conflict, text):
+    print("Diff3 Merge Detected.")
+    open(filename_between(filename, "#yours#"), 'w').write(
+        re.sub(d3_conflict, r'\1', text))
+    open(filename_between(filename, "#theirs#"), 'w').write(
+        re.sub(d3_conflict, r'\3', text))
+    return True
+  else:
+    return False
+
+def maybe_git_conflict_split(filename, text):
+  git_conflict = re.compile("{1}\n{4}{2}\n{4}{0}\n".format(
+      div_gt, div_lt, div_eq, div_pipe, inner_code), re.DOTALL)
+  if re.findall(git_conflict, text):
+    print("Git Merge Detected.")
+    open(filename_between(filename, "#yours#"), 'w').write(
+        re.sub(git_conflict, r'\1', text))
+    open(filename_between(filename, "#theirs#"), 'w').write(
+        re.sub(git_conflict, r'\2', text))
+    return True
+  else:
+    return False
+
+if __name__ == "__main__":
+  main()

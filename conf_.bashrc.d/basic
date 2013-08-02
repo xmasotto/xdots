@@ -1,0 +1,25 @@
+#!/bin/bash
+
+PS1="[\[\e[0;33m\]\u\[\e[m\]::\[\e[0;35m\]\h\[\e[m\] \[\e[1;34m\]\W\[\e[m\]] $ "
+if [ "$INSIDE_EMACS" ]; then
+  PS1="|PROMPT|\w|$PS1"
+fi
+
+# easy source
+alias s='source ~/.bashrc;'
+
+# colors
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+
+# emacs is my life
+export EDITOR="emacs"
+
+# Make paging work in emacs
+export PAGER="emacs_pager"
+alias less="$PAGER"
+
+# History
+function hist {
+    history ${1-10} | sed 's/^ [0-9]*  \(.*\)$/\1/g'
+}

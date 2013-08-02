@@ -1,0 +1,9 @@
+#!/bin/bash
+source ~/.bashrc.d/emacs
+source ~/.bashrc.d/util
+emacs_pid="`emacs_server_pid`"
+emacs_client_pids="`emacs_client_pids`"
+if [ "$emacs_pid" ]; then
+    server_user=`ps u $emacs_pid | tail -n 1 | awk '{print $1;}'`
+    run_as_user "$server_user" kill $emacs_pid $emacs_client_pids
+fi

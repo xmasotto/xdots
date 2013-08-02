@@ -1,0 +1,21 @@
+#!/bin/bash
+
+DNS_SERVER="`[ -f \"$HOME/.dns_server\" ] && cat \"$HOME/.dns_server\"`"
+
+if [ -z "$DNS_SERVER" ]; then
+    echo "Set your nameserver hostname in ~/.dns_server."
+    exit 1
+fi
+
+ssh_result="`ssh -oBatchMode=yes xmasotto@$DNS_SERVER 'true' 2>&1`"
+if [ "`echo $ssh_result | grep 'Permission denied'`" ]; then
+  [ -d ~/.ssh ] || (echo "Creating SSH Key" ; ssh-keygen -t rsa -C xmasotto@gmail.com)
+  ssh-copy-id xmasotto@$DNS_SERVER
+fi
+
+interval="120"
+[ "$1" ] && interval="$1"
+while true; do
+    update_dns nopass &>> "$HOME/.update_dns_log" || break
+    sleep $interval
+done

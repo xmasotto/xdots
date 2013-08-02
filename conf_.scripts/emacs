@@ -1,0 +1,39 @@
+#!/bin/bash
+
+source ~/.bashrc.d/util
+
+num_args="`num_args \"$*\"`"
+
+if [ -z "$INSIDE_EMACS" ]; then
+    # Open a vanilla emacs as root if the file 
+    # or directory is not writable.
+    if [ "$num_args" -ne "0" ]; then
+	if [ -a "$1" ]; then
+	    if ! [ -w "$1" ]; then 
+		sudo emacs -Q $*
+		exit 0
+	    fi
+	fi
+    fi
+
+    # Start an emacs server if one is not already running.
+    existing_emacs="`ps aux | grep '/usr/bin/emacs --daemon' | grep -v 'grep'`"
+    if [ -z "$existing_emacs" ]; then
+	emacs_server
+    fi
+
+    if [ "$num_args" -eq "0" ]; then
+        # Start at the home screen.
+	emacsclient $* -ce "(init-emacs-client)"
+    else
+	emacsclient -c $*
+    fi
+fi
+
+if [ "$INSIDE_EMACS" ]; then
+    if [ "$1" ]; then
+	emacsclient $*
+    else
+	echo "Emacs inside Emacs. We must go deeper."
+    fi
+fi

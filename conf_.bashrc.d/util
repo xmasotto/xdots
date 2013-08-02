@@ -1,0 +1,59 @@
+#!/bin/bash
+
+function run_as_user {
+    user="$1"
+    shift
+    if [ "$USER" != "$user" ]; then
+	if [ "`groups | grep '\bsudo\b'`" ]; then
+	    echo "$*" | sudo su "$server_user"
+	else
+	    echo "$*" | ssh -t "$server_user@localhost" 'bin/bash'
+	fi
+    else
+	$*
+    fi
+}
+
+function arg_list {
+    result=""
+    for arg in "$*"; do
+	if [ "$result" ]; then
+	    result=$arg
+	else
+	    result="$result $arg"
+	fi
+    done
+    echo $result
+}
+
+function filter_pids() {
+    grep -v 'grep\|find_pids' | sed 's/\s\+/ /g' | cut -d" " -f2
+}
+
+function num_args() {
+    echo "$1" | sed 's/-\+\b\w*\b//g' | wc -w
+}
+
+function source_dir() {
+  for f in `ls $1`; do
+    filename="$1/$f"
+    if [ -f "$filename" ]; then
+      source $filename
+    fi
+  done
+}
+
+function source_dir_recursively() {
+  for f in `ls $1`; do
+    filename="$1/$f"
+    if [ -f "$filename" ]; then
+      source $filename
+    fi
+  done
+  for f in `ls $1`; do
+    filename="$1/$f"
+    if [ -d "$filename" ]; then
+      source_dir_recursively $filename
+    fi
+  done
+}
