@@ -141,15 +141,41 @@
 	(setq result command))))
   result)
 
-; Define M-n from n = 1 to 9 to spawn/switch to a corresponding shell
 (defun change-shell (name)
   (let ((buf (get-buffer name)))
     (if buf (switch-to-buffer buf) (shell name))))
+
+(defun dired-change-shell (shellname)
+  (let ((dirname 
+	 (cond 
+	  (dired-directory dired-directory)
+	  (buffer-file-name 
+	   (file-name-directory (buffer-file-name)))
+	  (t nil))))
+    (when dirname
+      (change-shell shellname)
+      (end-of-buffer)
+      (comint-previous-prompt 1)
+      (comint-next-prompt 1)
+      (move-beginning-of-line 1)
+      ;; Check to see if the shell is prompting the user.
+      (when (eq (char-after (- (point) 2)) ?$)
+	(kill-line 0)
+	(insert "cd " dirname)
+	(comint-send-input)))))
+
+; Define M-n from n = 1 to 9 to spawn/switch to a corresponding shell.
+; Define C-c M-n spawn/switch to a shell in the same directory.
 (defmacro bind-shell (num)
   (list 'global-set-key
         (list 'kbd (format "M-%d" num))
         (list 'lambda () '(interactive)
-              (list 'change-shell (format "t%d" num)))))
+              (list 'change-shell (format "t%d" num))))
+  (list 'global-set-key
+	(list 'kbd (format "C-c M-%d" num))
+	(list 'lambda () '(interactive)
+	      (list 'dired-change-shell (format "t%d" num)))))
+
 (bind-shell 1)
 (bind-shell 2)
 (bind-shell 3)

@@ -35,25 +35,25 @@ function num_args() {
 }
 
 function source_dir() {
-  for f in `ls $1`; do
-    filename="$1/$f"
-    if [ -f "$filename" ]; then
-      source $filename
-    fi
-  done
+    for f in `ls $1`; do
+	filename="$1/$f"
+	if [ -f "$filename" ]; then
+	    source $filename
+	fi
+    done
 }
 
 function source_dir_recursively() {
-  for f in `ls $1`; do
-    filename="$1/$f"
-    if [ -f "$filename" ]; then
-      source $filename
-    fi
-  done
-  for f in `ls $1`; do
-    filename="$1/$f"
-    if [ -d "$filename" ]; then
-      source_dir_recursively $filename
-    fi
-  done
+    for f in `ls $1`; do
+	filename="$1/$f"
+	if [ -f "$filename" ]; then
+	    source $filename
+	fi
+    done
+    for f in `ls $1`; do
+	filename="$1/$f"
+	if [ -d "$filename" ]; then
+	    source_dir_recursively $filename
+	fi
+    done
 }

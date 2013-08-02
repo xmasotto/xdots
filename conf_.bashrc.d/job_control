@@ -1,22 +1,22 @@
 #!/bin/bash
 
 function hi {
-  while sleep 1; do
-    echo hi
-  done
+    while sleep 1; do
+	echo hi
+    done
 }
 
 function make_tmp_dir {
-  if [ ! -d "$1" ]; then
-    echo "Creating temp dir "$1" with job_user:$JOB_USER"
-    mkdir "$1"
-    chmod 755 "$1"
-    chown "$JOB_USER" "$1"
-  fi
+    if [ ! -d "$1" ]; then
+	echo "Creating temp dir "$1" with job_user:$JOB_USER"
+	mkdir "$1"
+	chmod 755 "$1"
+	chown "$JOB_USER" "$1"
+    fi
 }
 
 function start_job_sudo_ {
-  sudo su <<EOF
+    sudo su <<EOF
     source "$HOME/.bashrc.d/job_control"
     export JOB_USER="$USER"
     export JOB_TMP_DIR="$HOME/tmp"
@@ -35,122 +35,122 @@ EOF
 # process won't be cancelled. 
 # You can view your running processes with "jls"
 function jup {
-  if [ "$1" == "sudo" ]; then
-    shift
-    start_job_sudo_ $*
-  else
-    [ "$JOB_USER" ] || JOB_USER="$USER"
-    [ "$JOB_TMP_DIR" ] || JOB_TMP_DIR="$HOME/tmp"
-    make_tmp_dir "$JOB_TMP_DIR"
-    make_tmp_dir "$JOB_TMP_DIR/jobs"
-    make_tmp_dir "$JOB_TMP_DIR/jobs/running"
-    make_tmp_dir "$JOB_TMP_DIR/jobs/finished"
+    if [ "$1" == "sudo" ]; then
+	shift
+	start_job_sudo_ $*
+    else
+	[ "$JOB_USER" ] || JOB_USER="$USER"
+	[ "$JOB_TMP_DIR" ] || JOB_TMP_DIR="$HOME/tmp"
+	make_tmp_dir "$JOB_TMP_DIR"
+	make_tmp_dir "$JOB_TMP_DIR/jobs"
+	make_tmp_dir "$JOB_TMP_DIR/jobs/running"
+	make_tmp_dir "$JOB_TMP_DIR/jobs/finished"
 
-    if [ "$#" -eq "0" ]; then
-      echo "Usage: jup [sudo] COMMAND"
-      return 1
-    fi
+	if [ "$#" -eq "0" ]; then
+	    echo "Usage: jup [sudo] COMMAND"
+	    return 1
+	fi
 
 	# Show "sudo" on the my_jobs/my_jobd list
-    command_prefix=""
-    if [[ "$USER" != "$JOB_USER" && "$USER" == "root" ]]; then
-      command_prefix="sudo"
-    fi
+	command_prefix=""
+	if [[ "$USER" != "$JOB_USER" && "$USER" == "root" ]]; then
+	    command_prefix="sudo"
+	fi
 
-    (pid="$BASHPID"
-      logname="p_$pid"
-      running_log="$JOB_TMP_DIR/jobs/running/$logname"
-      finished_log="$JOB_TMP_DIR/jobs/finished/$logname"
+	(pid="$BASHPID"
+	    logname="p_$pid"
+	    running_log="$JOB_TMP_DIR/jobs/running/$logname"
+	    finished_log="$JOB_TMP_DIR/jobs/finished/$logname"
 
         # don't store the logs of killed processes
 	    #trap "mv $running_log $finished_log" 1 2 3 15 9
 
-      touch "$running_log"
-      chmod 644 "$running_log"
-      chown "$JOB_USER" "$running_log"
+	    touch "$running_log"
+	    chmod 644 "$running_log"
+	    chown "$JOB_USER" "$running_log"
 
-      date +"%D %T" >> "$running_log"
-      echo $command_prefix $* >> "$running_log"
-      $* &>> "$running_log"
-      job_return_code=$?
-      
-      sleep 1
-      kill -USR1 $$ &>/dev/null
-      echo "JOB_FINISHED:$job_return_code" >> "$running_log"
-      mv $running_log $finished_log &>/dev/null
-    ) &
-    jobpid="$!"
-    disown
+	    date +"%D %T" >> "$running_log"
+	    echo $command_prefix $* >> "$running_log"
+	    $* &>> "$running_log"
+	    job_return_code=$?
+	    
+	    sleep 1
+	    kill -USR1 $$ &>/dev/null
+	    echo "JOB_FINISHED:$job_return_code" >> "$running_log"
+	    mv $running_log $finished_log &>/dev/null
+	) &
+	jobpid="$!"
+	disown
 
-    sleep 1
-    tail -f -n +3 "$JOB_TMP_DIR/jobs/running/p_$!" &
-    tailpid="$!"
+	sleep 1
+	tail -f -n +3 "$JOB_TMP_DIR/jobs/running/p_$!" &
+	tailpid="$!"
 
-    trap "kill -9 $tailpid" 2 3 USR1
-    wait $!
-  fi
+	trap "kill -9 $tailpid" 2 3 USR1
+	wait $!
+    fi
 }
 
 # View the log corresponding to the given process id.
 function jmon {
-  if [ -f "$HOME/tmp/jobs/running/p_$1" ]; then
-    tail -f "$HOME/tmp/jobs/running/p_$1"
-  elif [ -f "$HOME/tmp/jobs/finished/p_$1" ]; then
-    less "$HOME/tmp/jobs/finished/p_$1"
-  else
-    echo "Can't find Job $1";
-  fi
+    if [ -f "$HOME/tmp/jobs/running/p_$1" ]; then
+	tail -f "$HOME/tmp/jobs/running/p_$1"
+    elif [ -f "$HOME/tmp/jobs/finished/p_$1" ]; then
+	less "$HOME/tmp/jobs/finished/p_$1"
+    else
+	echo "Can't find Job $1";
+    fi
 }
 
 # Get the log file corresponding to the given process id.
 function jlog {
-  if [ -f "$HOME/tmp/jobs/running/p_$1" ]; then
-    echo "$HOME/tmp/jobs/running/p_$1"
-  elif [ -f "$HOME/tmp/jobs/finished/p_$1" ]; then
-    echo "$HOME/tmp/jobs/finished/p_$1"
-  fi
+    if [ -f "$HOME/tmp/jobs/running/p_$1" ]; then
+	echo "$HOME/tmp/jobs/running/p_$1"
+    elif [ -f "$HOME/tmp/jobs/finished/p_$1" ]; then
+	echo "$HOME/tmp/jobs/finished/p_$1"
+    fi
 }
 
 # Get a list of your running processes.
 # Shows their start time, pid, and command entered.
 function jls {
-  if [ -d "$HOME/tmp/jobs/running" ]; then
-    for f in `ls -tr "$HOME/tmp/jobs/running"`; do
-      d=`head -n 1 "$HOME/tmp/jobs/running/$f"`
-      command=`sed -n '2p' "$HOME/tmp/jobs/running/$f"`
-      pid=`echo $f | cut -d_ -f2`
-      echo "[$d] $pid \"$command\""
-    done
-  fi
+    if [ -d "$HOME/tmp/jobs/running" ]; then
+	for f in `ls -tr "$HOME/tmp/jobs/running"`; do
+	    d=`head -n 1 "$HOME/tmp/jobs/running/$f"`
+	    command=`sed -n '2p' "$HOME/tmp/jobs/running/$f"`
+	    pid=`echo $f | cut -d_ -f2`
+	    echo "[$d] $pid \"$command\""
+	done
+    fi
 }
 
 # Get a list of your finished jobs.
 function jlsd {
-  if [ -d "$HOME/tmp/jobs/finished" ]; then
-    for f in `ls -tr "$HOME/tmp/jobs/finished"`; do
-      d=`head -n 1 "$HOME/tmp/jobs/finished/$f"`
-      command=`sed -n '2p' "$HOME/tmp/jobs/finished/$f"`
-      pid=`echo $f | cut -d_ -f2`
-      return_code=`tail -n 1 "$HOME/tmp/jobs/finished/$f" \
+    if [ -d "$HOME/tmp/jobs/finished" ]; then
+	for f in `ls -tr "$HOME/tmp/jobs/finished"`; do
+	    d=`head -n 1 "$HOME/tmp/jobs/finished/$f"`
+	    command=`sed -n '2p' "$HOME/tmp/jobs/finished/$f"`
+	    pid=`echo $f | cut -d_ -f2`
+	    return_code=`tail -n 1 "$HOME/tmp/jobs/finished/$f" \
 	| grep '^JOB_FINISHED:' | cut -d: -f2`
-      echo "[$d] $pid $return_code \"$command\""
-    done
-  fi
+	    echo "[$d] $pid $return_code \"$command\""
+	done
+    fi
 }
 
 # Remove killed processes from the running directory.
 function jfix {
-  for f in `ls $HOME/tmp/jobs/running`; do
-    pid="`echo $f | cut -d_ -f2`"
-    if [ "`ps $pid | wc -l`" -ne 2 ]; then
-      echo "Removed $f"
-      rm -f "$HOME/tmp/jobs/running/$f"
-    fi
-  done
+    for f in `ls $HOME/tmp/jobs/running`; do
+	pid="`echo $f | cut -d_ -f2`"
+	if [ "`ps $pid | wc -l`" -ne 2 ]; then
+	    echo "Removed $f"
+	    rm -f "$HOME/tmp/jobs/running/$f"
+	fi
+    done
 }
 
 # Deletes all of the finished job logs.
 function jclear {
-  jfix
-  [ -d "$HOME/tmp/jobs/finished" ] && rm -rf "$HOME/tmp/jobs/finished"
+    jfix
+    [ -d "$HOME/tmp/jobs/finished" ] && rm -rf "$HOME/tmp/jobs/finished"
 }
