@@ -165,14 +165,15 @@
 ; Define M-n from n = 1 to 9 to spawn/switch to a corresponding shell.
 ; Define C-c M-n spawn/switch to a shell in the same directory.
 (defmacro bind-shell (num)
-  (list 'global-set-key
-        (list 'kbd (format "M-%d" num))
-        (list 'lambda () '(interactive)
-              (list 'change-shell (format "t%d" num))))
-  (list 'global-set-key
-	(list 'kbd (format "C-c M-%d" num))
-	(list 'lambda () '(interactive)
-	      (list 'dired-change-shell (format "t%d" num)))))
+  (list 'progn
+	(list 'global-set-key
+	      (list 'kbd (format "M-%d" num))
+	      (list 'lambda () '(interactive)
+		    (list 'change-shell (format "t%d" num))))
+	(list 'global-set-key
+	      (list 'kbd (format "C-c M-%d" num))
+	      (list 'lambda () '(interactive)
+		    (list 'dired-change-shell (format "t%d" num))))))
 
 (bind-shell 1)
 (bind-shell 2)
