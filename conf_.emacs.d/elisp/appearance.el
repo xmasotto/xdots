@@ -7,8 +7,9 @@
 (scroll-bar-mode -1)
 
 (defun init-emacs-client-appearance ()
-  (set-cursor-color "#ffffff")
-  (set-background-color "#111111"))
+  (set-face-attribute 'default nil
+		      :foreground "white"
+		      :background "black"))
 
 ;; When an emacs client is started, bump to the home screen
 ;; instead of the scratch buffer.

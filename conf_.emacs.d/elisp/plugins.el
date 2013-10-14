@@ -49,6 +49,10 @@
 (add-to-list 'load-path "~/.emacs.d/lib/tramp")
 (require 'tramp)
 
+; Verilog
+(add-hook 'verilog-mode-hook
+	  (lambda () (setq verilog-auto-newline nil)))
+
 ; Winner Mode
 ; undo window configuration changes.
 (winner-mode 1)
