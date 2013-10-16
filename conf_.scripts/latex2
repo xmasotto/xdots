@@ -1,0 +1,16 @@
+#!/bin/bash
+if [ -z "$1" ]; then
+  echo "Ya Idiot"
+fi
+
+f="$1"
+function subs {
+  echo "$f" | sed "s/tex/$1/g"
+}
+
+pdflatex "$1" &&
+subs log | xargs rm &&
+subs out | xargs rm &&
+subs aux | xargs rm &&
+subs dvi | xargs rm -f &&
+(subs pdf | xargs evince &>/dev/null &)

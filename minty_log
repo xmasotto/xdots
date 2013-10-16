@@ -1,0 +1,24 @@
+git
+chromium-browser
+emacs
+realpath
+compizconfig-settings-manager
+
+* downloaded xdots
+* customized themes - made the window border gray
+* disabled chrome title bar
+* added win-num and win-shift-num for workspace switching/moving
+* "gsettings set org.cinnamon number-workspaces x" to change the num workspaces
+* fixed IllinoisNet: PEAP with MSCHAPv2
+* pacapt (pacman for all OS) added to xdots
+
+subversion
+texlive
+texlive-latex-extra
+texlive-generic-extra
+texlive-math-extra
+texlive-fonts-extra
+texlive-formats-extra
+texlive-humanities
+
+* configure tex: "texhash ~/texmf"

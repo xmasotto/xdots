@@ -29,4 +29,5 @@
 (auto-set-bookmark "_elisp" "~/.emacs.d/elisp")
 (auto-set-bookmark "_scripts" "~/.scripts")
 (auto-set-bookmark "_xmonad" "~/.xmonad")
+(auto-set-bookmark "_latex" "~/texmf/tex/latex")
 (bookmark-save)
