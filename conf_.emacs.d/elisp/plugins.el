@@ -56,5 +56,5 @@
 ; Winner Mode
 ; undo window configuration changes.
 (winner-mode 1)
-(global-set-key (kbd "<C-M-left>") 'winner-undo)
-(global-set-key (kbd "<C-M-right>") 'winner-redo)
+(global-set-key (kbd "<M-left>") 'winner-undo)
+(global-set-key (kbd "<M-right>") 'winner-redo)

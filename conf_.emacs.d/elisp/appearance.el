@@ -6,12 +6,6 @@
 (tool-bar-mode 0)
 (scroll-bar-mode -1)
 
-(defun init-emacs-client-appearance ()
-  (set-face-attribute 'default nil
-		      :foreground "white"
-		      :background "black")
-  (set-cursor-color "white"))
-
 ;; When an emacs client is started, bump to the home screen
 ;; instead of the scratch buffer.
 (defun init-emacs-client ()
@@ -26,3 +20,11 @@
    (get-buffer "*GNU Emacs*"))
   (init-emacs-client-appearance)
   "All your emacs are belong to us.")
+
+;; Called when emacs starts up. 
+;; Use to modify the background and cursor colors.
+(defun init-emacs-client-appearance ()
+  (set-face-attribute 'default nil
+		      :foreground "white"
+		      :background "black")
+  (set-cursor-color "white"))
