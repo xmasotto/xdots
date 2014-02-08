@@ -1,0 +1,86 @@
+% Style file for homeworks and solution. Designed by Anil N. Hirani
+% and Kaushik Kalyanaraman in Fall 2010 starting from a style file
+% that was floating around the department.
+
+\usepackage{amsmath, amssymb,amsthm}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{paralist}
+\usepackage{enumitem}
+\usepackage{color}
+\usepackage[small,bf]{caption}
+\usepackage[margin=1in]{geometry}
+\usepackage[colorlinks,linkcolor=black,bookmarksopen,bookmarksnumbered,
+citecolor=black,urlcolor=black]{hyperref}
+\usepackage{listings}
+
+% Code inclusion style
+\lstset{language=Python, numbers=left, 
+  basicstyle=\normalsize\ttfamily,
+  commentstyle=\color[rgb]{0.7,0.2,0.2}\ttfamily,
+  keywordstyle=\color{blue},  showstringspaces=false}
+
+
+%\renewcommand{\lstlistingname}{Program}
+
+% Various new commands and environment
+\DeclareMathOperator{\fl}{fl}
+\DeclareMathOperator{\boundary}{\partial}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\rank}{rank}
+\newcommand{\innerproduct}[2]{\langle #1, #2 \rangle}
+\newcommand{\Innerproduct}[2]{\left\langle #1, #2 \right\rangle}
+
+\newcommand{\abs}[1]{\lvert#1\rvert}
+\newcommand{\norm}[1]{\lVert#1\rVert}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\cw}{\texttt}
+\newcommand{\pyin}[1]{\ttfamily >>> #1\newline}
+\newcommand{\pyout}[1]{\ttfamily #1\newline}
+\newenvironment{ipy}{\smallskip\begin{quote}}{\end{quote}}
+\newcommand{\todo}[1]{\vspace{5 mm}\par \noindent
+\marginpar{\textsc{ToDo}}
+\framebox{\begin{minipage}[c]{0.95 \textwidth}
+\tt #1 \end{minipage}}\vspace{5 mm}\par}
+\newenvironment{problemlist}{
+  \begin{enumerate}[fullwidth, listparindent=\parindent, itemsep=2em,
+    font=\bfseries,label=Problem \arabic{enumi}]}
+  {\end{enumerate}}
+\newenvironment{tasklist}{
+  \begin{enumerate}[fullwidth, listparindent=\parindent, itemsep=2em,
+    font=\bfseries,label=Task \arabic{enumi}]}
+  {\end{enumerate}}
+\newenvironment{parts}{
+  \begin{enumerate}[fullwidth, listparindent=\parindent, itemsep=2em,
+    font=\bfseries,label=Part \arabic{enumi}]}
+  {\end{enumerate}}
+\newenvironment{problemparts}
+{\begin{enumerate}[fullwidth,listparindent=\parindent,itemsep=1em]} 
+{\end{enumerate}}
+\newcommand{\problem}[1]{\item{\bf [#1pt]}}
+\newcommand{\task}[1]{\item{\bf [#1pt]}}
+\newcommand{\solution}{\bigskip\noindent{\bf Solution: }}
+\newcommand{\inlinesolution}{\solution} % for backward compatibility
+\newcommand{\rubric}[0]{\vspace{1.5ex}\par\noindent{\bf Rubric: }\par}
+
+
+% Page header (use \maketitle)
+\newcommand\semester{Spring~2014}
+\newcommand\course{CS~357~/~MATH~357}
+\newlength{\sidebox}\setlength{\sidebox}{9.5em} 
+\newlength{\titlebox}\setlength{\titlebox}{\textwidth}
+\addtolength{\titlebox}{-2.2\sidebox}
+\newcommand{\due}[1]{\date{#1}}
+\renewcommand{\maketitle}{
+\noindent\parbox[t]{\sidebox}{\course\\ \semester}
+\hfill
+\parbox[t][2ex][c]{\titlebox}{ \centering {\bf \@title} \\ Instructor: B. David Semeraro
+\\ University of Illinois at Urbana-Champaign}
+\hfill
+\parbox[t]{\sidebox}{\raggedleft \bf Due: \@date}
+\vspace{3ex}
+\hrule
+}
+
+
