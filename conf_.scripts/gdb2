@@ -7,6 +7,13 @@ fi
 program="$1"
 shift
 
-echo "r $*" > .debug_tmp
+echo "
+set \$_exitcode = -999
+r $*
+if \$_exitcode != -999
+  quit
+end
+" > .debug_tmp
+
 gdb "$program" -x .debug_tmp
 rm .debug_tmp
