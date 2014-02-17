@@ -1,8 +1,6 @@
 #!/bin/bash
 
-if hostname -I &>/dev/null; then
-  hostname -I | awk '{print $1}'
-elif type ifconfig &>/dev/null; then
+if type ifconfig &>/dev/null; then
   ifconfig | awk '/inet addr:/&&!/127.0.0.1/{split($2,f,":");print f[2]}' | head -n1
 elif type ip &>/dev/null; then
   ip addr | awk '/inet/&&!/127.0.0.1/{split($2,a,"/");print a[1];exit}' | head -n1
