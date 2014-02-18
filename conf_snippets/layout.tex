@@ -1,0 +1,198 @@
+\documentclass{article}
+% Almost always {article}. 
+% [options]: http://www.nada.kth.se/~carsten/latex/class.html
+
+\usepackage{enumerate}
+\usepackage{amsmath, amsthm, amssymb}
+
+\usepackage {parskip}
+\usepackage[margin=2.5cm]{geometry}
+% http://tug.ctan.org/tex-archive/macros/latex/contrib/geometry/geometry.pdf
+
+\begin{document}
+
+\section{Part 1}
+
+\subsection{Lists}
+
+\noindent Here's my list using itemize:
+
+\begin{itemize}
+\item Item 1.
+\item Item 2.
+\item Item 3.
+\end{itemize}
+
+\noindent Here's my list using enumerate:
+
+\begin{enumerate}
+\item Item 1.
+\item Item 2.
+\item Item 3.
+\end{enumerate}
+
+\noindent Custom Labels
+
+\begin{enumerate}[(a)]
+\item 
+  Hello
+\item 
+  World
+\item 
+  People
+\end{enumerate}
+
+\noindent Here's my list using description:
+
+\begin{description}
+\item[Heading 1.] Item 1.
+\item[Heading 2.] Item 2.
+\item[Heading 3.] Item 3.
+\end{description}
+
+\noindent Here's my list with nested itemize:
+
+\begin{itemize}
+\item Item 1.
+\begin{itemize}
+\item List 2, Item 1
+\item List 2, Item 2
+\end{itemize}
+\item Item 2.
+\item Item 3.
+\end{itemize}
+
+
+\subsection{Tables}
+% \begin{tabular}[alignment (t or b)]{columns (l, c, r, or |)}
+% rows
+% \end{tabular}
+% use \multicolumn to merge rows
+
+\begin{tabular}[t]{|l|ccccc|c|}
+\multicolumn{7}{c}{USAMTS Scores Round 1}\\\hline
+Name&\#1&\#2&\#3&\#4&\#5&Total\\\hline
+John Doe&5&5&3&2&1&16\\
+Jane Doe&5&5&5&4&5&24\\
+Richard Feynman&5&5&5&5&5&25\\\hline
+\end{tabular}
+
+\subsection{Boxes}
+
+I can create basic boxes for text \makebox[2in]{like this}. Notice
+that there's a 2in wide space with `like this' in the middle of it.
+
+If I want to put a box around the text, I can use a frame box. The
+result looks \framebox[2in]{like this}.
+
+I can also justify the text to the right within a box
+\makebox[1.5in][r]{like so} or \framebox[2.5in][l]{like so}.
+
+We can also use quick versions of these. We can just \mbox{do this}
+or \fbox{this} to create a quick box that's exactly the size of what we put in it.
+
+\parbox[b]{2in}{I like using parbox to create funny little boxes of
+text all over my page. This one has its bottom edge aligned with the
+current line}
+CURRENT LINE.
+\parbox[t]{2in}{The top of my text is aligned with that current
+line.}
+
+\parbox{1.5in}{I'm just centered on the current line.} CURRENT LINE
+\parbox{2.5in}{You probably got a few Overfull or Underfull warnings
+when you typeset this. Sometimes narrow boxes will do that; if you're
+happy with the output, don't sweat it.}
+
+\subsection{Centering}
+
+The helix hath spoken.
+
+\begin{center}
+Fourscore and seven years ago our fathers brought forth on this
+continent a new nation, conceived in liberty and dedicated to the
+proposition that all men are created equal.
+\end{center}
+
+\begin{flushleft}
+Now we are engaged in a great civil war, testing whether that nation
+or any nation so conceived and so dedicated can long endure. We are
+met on a great battlefield of that war. We have come to dedicate a
+portion of it as a final resting place for those who died here that
+the nation might live. This we may, in all propriety do. But in a
+larger sense, we cannot dedicate, we cannot consecrate, we cannot
+hallow this ground. The brave men, living and dead who struggled here
+have hallowed it far above our poor power to add or detract. The
+world will little note nor long remember what we say here, but it can
+never forget what they did here.
+\end{flushleft}
+
+\begin{flushright}
+It is rather for us the living, we here be dedicated to the great
+task remaining before us--that from these honored dead we take
+increased devotion to that cause for which they here gave the last
+full measure of devotion--that we here highly resolve that these dead
+shall not have died in vain, that this nation shall have a new birth
+of freedom, and that government of the people, by the people, for the
+people shall not perish from the earth.
+\end{flushright}
+
+\section{Part 2}
+
+\subsection{Size Matters}
+
+When I was born, I was {\small small}. Actually, {\scriptsize I was
+very small}. When I got older, I thought some day {\Large I would be
+large}, {\Huge maybe even gigantic}. But instead, I'm not even
+normalsize. {\small I'm still small.}
+
+
+\subsection {Style over Substance}
+
+When I was born, I was {\small small}. Actually, {\scriptsize I was
+very small}. When I got older, I thought some day {\Large I would be
+large}, {\Huge maybe even gigantic}. But instead, I'm not even
+normalsize. {\small I'm still small.}
+
+\subsubsection{Bold, Italics, Underline}
+
+When something is \emph{really}, \textbf{really} important, you can
+\underline{underline it}, \emph{italicize it}, \textbf{bold it}. If
+you \underline{\textbf{\emph{must do all three}}}, then you can nest
+them.
+
+\subsubsection{Font Families}
+
+You may want to write things \textsf{in a sans-serif font}, or
+\texttt{in a typewriter font}, or \textsl{in a slanted font} (which
+is \emph{slightly different} than italics). Sometimes it pays
+\textsc{to write things in small capitals}. You can next go to
+\textbf{bold and then \textsl{bold and slanted} and then back to just
+bold} again.
+
+\subsection{Spacing}
+
+$x+y$
+
+$x+\,y$
+
+$x+\:y$
+
+$x+\;y$
+
+$x+\quad y$
+
+$x+\qquad y$
+
+$x+\!y$
+
+I\hfill like \hfill space.
+\vfill
+In every direction.
+
+I \hspace{2in} like \hspace{1in} space.
+
+\vspace{5in}
+
+In every direction.
+
+\end{document}

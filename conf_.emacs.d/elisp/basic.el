@@ -30,4 +30,5 @@
 (auto-set-bookmark "_scripts" "~/.scripts")
 (auto-set-bookmark "_xmonad" "~/.xmonad")
 (auto-set-bookmark "_latex" "~/texmf/tex/latex")
+(auto-set-bookmark "_snippets" "~/snippets")
 (bookmark-save)

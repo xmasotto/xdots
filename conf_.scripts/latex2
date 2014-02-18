@@ -8,9 +8,15 @@ function subs {
   echo "$f" | sed "s/tex/$1/g"
 }
 
-pdflatex "$1" &&
-subs log | xargs rm &&
-subs out | xargs rm &&
-subs aux | xargs rm &&
+pdflatex "$1";
+compiled="$?"
+
+subs log | xargs rm -f &&
+subs out | xargs rm -f &&
+subs aux | xargs rm -f &&
 subs dvi | xargs rm -f &&
-(subs pdf | xargs evince &>/dev/null &)
+rm -f texput.log
+
+if [ "$compiled" -eq "0" ]; then
+    (subs pdf | xargs evince &>/dev/null &)
+fi
