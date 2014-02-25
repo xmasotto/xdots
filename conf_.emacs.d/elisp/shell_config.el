@@ -139,9 +139,21 @@
 	(setq result command))))
   result)
 
+; Clears the shell log
+(defun clear-shell ()
+  (interactive)
+  (erase-buffer)
+  (comint-send-input)
+  (beginning-of-buffer)
+  (kill-line)
+  (end-of-buffer))
+(global-set-key (kbd "M-l") 'clear-shell)
+
 (defun change-shell (name)
   (let ((buf (get-buffer name)))
-    (if buf (switch-to-buffer buf) (shell name))))
+    (if buf (switch-to-buffer buf) (shell name))
+    (if (not (get-buffer-process (current-buffer)))
+	(shell name))))
 
 (defun dired-change-shell (shellname)
   (let ((dirname 
