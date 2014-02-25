@@ -1,5 +1,7 @@
-; Get better at emacs lisp before tackling this
-; Make C-c M-n change to the nth scratch buffer
-; Make it easy to clear a scratch buffer (gets saved always)
-; Persistent - automatically hooked to a file name (C-x C-s) works
-; Certain numbers already preloaded with modes (Fundamental, Org-mode, emacs lisp)
+(defun switch-scratch ()
+  (interactive)
+  (switch-to-buffer "*scratch*"))
+
+(global-set-key (kbd "M-`") 'switch-scratch)
+(setq initial-scratch-message "")
+(setq initial-major-mode 'text-mode)

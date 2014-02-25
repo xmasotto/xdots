@@ -1,5 +1,11 @@
 #!/bin/bash
 
+function kill {
+    /usr/bin/kill $*
+    jfix
+}
+
+# tester function
 function hi {
     while sleep 1; do
 	echo hi
@@ -27,6 +33,15 @@ function start_job_sudo_ {
     jup $*
     export JOB_TMP_DIR=""    
 EOF
+}
+
+function jhelp {
+    echo -e 'jup COMMAND\t run a shell command as an asynchronous job
+jmon PID\t view the log of the given job
+jlog PID\t edit the log of the given job (in $EDITOR)
+jls\t\t get a list of running jobs
+jlsd\t\t get a list of finished jobs
+jclear\t\t clear the list of finished jobs'
 }
 
 # Starts the following command as a daemon, and starts a
@@ -75,7 +90,7 @@ function jup {
 	    job_return_code=$?
 	    
 	    sleep 1
-	    kill -USR1 $$ &>/dev/null
+	    #kill -USR1 $$ &>/dev/null
 	    echo "JOB_FINISHED:$job_return_code" >> "$running_log"
 	    mv $running_log $finished_log &>/dev/null
 	) &
@@ -83,18 +98,27 @@ function jup {
 	disown
 
 	sleep 1
-	tail -f -n +3 "$JOB_TMP_DIR/jobs/running/p_$!" &
-	tailpid="$!"
 
-	trap "kill -9 $tailpid" 2 3 USR1
-	wait $!
+	tail -f -n +3 "$JOB_TMP_DIR/jobs/running/p_$!"
+
+#	echo jmon "$jobpid"
+# 	jmon "$jobpid"
+
+#	tailpid="$!"
+#	echo tail -f -n +3 "$JOB_TMP_DIR/jobs/running/p_$!" &
+
+#	trap "kill -9 $tailpid" 2 3 USR1
+#	wait $!
     fi
 }
 
 # View the log corresponding to the given process id.
 function jmon {
     if [ -f "$HOME/tmp/jobs/running/p_$1" ]; then
-	tail -f "$HOME/tmp/jobs/running/p_$1"
+	NLINES=10
+	line=$(expr `wc -l "$HOME/tmp/jobs/running/p_$1" | cut -d' ' -f1` - "$NLINES")
+	echo "line:$line"
+	tail -n +"$line" -f "$HOME/tmp/jobs/running/p_$1"
     elif [ -f "$HOME/tmp/jobs/finished/p_$1" ]; then
 	less "$HOME/tmp/jobs/finished/p_$1"
     else
@@ -105,9 +129,9 @@ function jmon {
 # Get the log file corresponding to the given process id.
 function jlog {
     if [ -f "$HOME/tmp/jobs/running/p_$1" ]; then
-	echo "$HOME/tmp/jobs/running/p_$1"
+	$EDITOR "$HOME/tmp/jobs/running/p_$1"
     elif [ -f "$HOME/tmp/jobs/finished/p_$1" ]; then
-	echo "$HOME/tmp/jobs/finished/p_$1"
+	$EDITOR "$HOME/tmp/jobs/finished/p_$1"
     fi
 }
 
@@ -144,7 +168,9 @@ function jfix {
 	pid="`echo $f | cut -d_ -f2`"
 	if [ "`ps $pid | wc -l`" -ne 2 ]; then
 	    echo "Removed $f"
-	    rm -f "$HOME/tmp/jobs/running/$f"
+	    echo "JOB_FINISHED:KILLED" >> "$HOME/tmp/jobs/running/$f"
+	    mv "$HOME/tmp/jobs/running/$f" "$HOME/tmp/jobs/finished/$f"
+#	    rm -f "$HOME/tmp/jobs/running/$f"
 	fi
     done
 }
