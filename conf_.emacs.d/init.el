@@ -13,6 +13,7 @@
 (while elisp-files
   (setq f (car elisp-files))
   (when (string-match "\\.el$" f) (load f))
+  (delete-other-windows)
   (setq elisp-files (cdr elisp-files)))
 
 ; Accept incoming emacsclients
