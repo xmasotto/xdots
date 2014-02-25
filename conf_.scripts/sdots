@@ -1,0 +1,9 @@
+#!/bin/bash
+
+dir="$HOME/xdots"
+if [ -d "$dir" ]; then
+    cd "$dir"
+    git pull
+else
+    echo "No xdots!"
+fi
