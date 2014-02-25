@@ -19,16 +19,3 @@
 (global-set-key (kbd "M-0") 'balance-windows)
 (global-set-key (kbd "C-M--") 'toggle-window-width)
 (global-set-key (kbd "C-M-0") 'balance-windows)
-
-; Automatically set certain bookmarks
-(defun auto-set-bookmark (name filename)
-  (let ((buffer (find-file filename)))
-	(with-current-buffer buffer (bookmark-set name))
-	(kill-buffer buffer)))
-(auto-set-bookmark "_bashrc.d" "~/.bashrc.d")
-(auto-set-bookmark "_elisp" "~/.emacs.d/elisp")
-(auto-set-bookmark "_scripts" "~/.scripts")
-(auto-set-bookmark "_xmonad" "~/.xmonad")
-(auto-set-bookmark "_latex" "~/texmf/tex/latex")
-(auto-set-bookmark "_snippets" "~/snippets")
-(bookmark-save)
