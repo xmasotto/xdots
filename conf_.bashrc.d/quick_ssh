@@ -1,0 +1,14 @@
+#!/bin/bash
+
+function ssh2_add {
+    file="$HOME/xdots/conf_.bashrc.d/_quick_ssh_data"
+    if [ $# -ne 2 ]; then
+	echo "Usage: ssh2_add NAME HOSTNAME"
+	return
+    fi
+    echo "alias $1=\"echo $2\"" >> $file
+}
+
+function ssh2 {
+    ssh "`eval $1`"
+}
