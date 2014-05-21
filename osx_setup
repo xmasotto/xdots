@@ -11,7 +11,7 @@ echo "
 PATH=/usr/local/opt/coreutils/libexec/gnubin:\$PATH
 PATH=/usr/local/opt/gnu-tar/libexec/gnubin:\$PATH
 PATH=/usr/local/opt/gnu-sed/bin:\$PATH
-source $HOME/.bashrc
+source $HOME/xdots/bashrc
 
 EMACS_SERVER='/usr/local/Cellar/emacs/24.3/bin/emacs --daemon'
 EMACS_CLIENT='/usr/local/Cellar/emacs/24.3/bin/emacsclient'
