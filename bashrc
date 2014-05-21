@@ -12,7 +12,7 @@ function xdots_setup() {
     # Make sure this script is sourced on startup
     (echo; echo ". $HOME/xdots/bashrc #xdots_gen") >> "$HOME/.bashrc"
 
-    . ~/.bashrc
+    source "$HOME/.bashrc"
 }
 
 function xdots_teardown() {
@@ -35,7 +35,7 @@ function xdots_update {
 }
 
 if [ -d "$HOME/.bashrc.d" ]; then
-  source ~/.bashrc.d/util
+  source "$HOME/.bashrc.d/util"
 
   # Place for random scripts
   PATH="$HOME/.scripts:$PATH"

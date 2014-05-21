@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo 'TODO!'
+
+#brew install coreutils findutils gnu-tar gnu-sed gawk gnutls gnu-indent gnu-getopt

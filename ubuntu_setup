@@ -1,4 +1,8 @@
 #!/bin/bash
+
+source "$HOME/xdots/bashrc"
+xdots_init
+
 cd "`dirname \"$0\"`"
 scripts_path="`realpath \"./conf_.scripts\"`"
 echo "export PATH=$scripts_path:\$PATH" > /etc/profile.d/xdots.sh
