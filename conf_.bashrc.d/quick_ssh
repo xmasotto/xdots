@@ -7,6 +7,7 @@ function ssh2_add {
 	return
     fi
     echo "alias $1=\"echo $2\"" >> $file
+    s
 }
 
 function ssh2 {

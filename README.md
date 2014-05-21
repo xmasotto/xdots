@@ -5,7 +5,7 @@ Instantly apply my *perfect* emacs, xmonad, and bash configurations
 
 ```bash
 # Read Only
-curl -s https://raw.github.com/xmasotto/xdots/master/xdots_download \
+curl -sL https://raw.github.com/xmasotto/xdots/master/xdots_download \
      | source /dev/stdin && source ~/.bashrc
 ```
 
