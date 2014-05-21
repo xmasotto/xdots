@@ -1,5 +1,21 @@
 #!/bin/bash
 
-echo 'TODO!'
+brew install git
+brew install coreutils --default-names
+brew install findutils --default-names
+brew install gnu-tar --default-names
+brew install gnu-sed --default-names
+brew install --cocoa emacs
 
-#brew install coreutils findutils gnu-tar gnu-sed gawk gnutls gnu-indent gnu-getopt
+echo "
+PATH=/usr/local/opt/coreutils/libexec/gnubin:\$PATH
+PATH=/usr/local/opt/gnu-tar/libexec/gnubin:\$PATH
+PATH=/usr/local/opt/gnu-sed/bin:\$PATH
+source $HOME/.bashrc
+
+EMACS_SERVER='/usr/local/Cellar/emacs/24.3/bin/emacs --daemon'
+EMACS_CLIENT='/usr/local/Cellar/emacs/24.3/bin/emacsclient'
+" > "$HOME?.profile"
+
+source "$HOME/.profile"
+xdots_setup

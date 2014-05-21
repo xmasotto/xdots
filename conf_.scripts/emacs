@@ -1,6 +1,7 @@
 #!/bin/bash
 
 source ~/.bashrc.d/util
+source ~/.bashrc.d/emacs
 
 num_args="`num_args \"$*\"`"
 
@@ -17,22 +18,24 @@ if [ -z "$INSIDE_EMACS" ]; then
     fi
 
     # Start an emacs server if one is not already running.
-    existing_emacs="`ps aux | grep '/usr/bin/emacs --daemon' | grep -v 'grep'`"
+    existing_emacs="`emacs_server_process`"
     if [ -z "$existing_emacs" ]; then
-	emacs_server
+	$EMACS_SERVER &&
+	$EMACS_CLIENT -ce "(setup-shells)" &&
+	echo "Sucessfully started emacs server."
     fi
 
     if [ "$num_args" -eq "0" ]; then
         # Start at the home screen.
-	emacsclient $* -ce "(init-emacs-client)"
+	$EMACS_CLIENT $* -ce "(init-emacs-client)"
     else
-	emacsclient -c $*
+	$EMACS_CLIENT -c $*
     fi
 fi
 
 if [ "$INSIDE_EMACS" ]; then
     if [ "$1" ]; then
-	emacsclient $*
+	$EMACS_CLIENT $*
     else
 	echo "Emacs inside Emacs. We must go deeper."
     fi

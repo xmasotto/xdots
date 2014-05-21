@@ -1,6 +1,9 @@
 #!/bin/bash
 source ~/.bashrc.d/util
 
+export EMACS_SERVER=${EMACS_SERVER:-/usr/bin/emacs --daemon}
+export EMACS_CLIENT=${EMACS_CLIENT:-/usr/bin/emacsclient}
+
 function emacs_server_process() {
     ps aux | grep '/usr/bin/emacs --daemon' | grep -v 'grep'
 }

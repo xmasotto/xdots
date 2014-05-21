@@ -44,12 +44,13 @@
 (auto-set-bookmark "|z|_snippets" "~/snippets")
 
 ; Automatically set bookmarks to directories within ~/coding
-(setq coding-files (directory-files "~/coding"))
-(while coding-files
-  (let ((f (car coding-files)))
-    (when (and (not (string= f ".")) (not (string= f ".."))
-	     (file-accessible-directory-p (concat "~/coding/" f)))
-      (auto-set-bookmark (concat "|c|_" f) (concat "~/coding/" f))))
-  (setq coding-files (cdr coding-files)))
+(when (file-exists-p "~/coding")
+  (setq coding-files (directory-files "~/coding"))
+  (while coding-files
+    (let ((f (car coding-files)))
+      (when (and (not (string= f ".")) (not (string= f ".."))
+		 (file-accessible-directory-p (concat "~/coding/" f)))
+	(auto-set-bookmark (concat "|c|_" f) (concat "~/coding/" f))))
+    (setq coding-files (cdr coding-files))))
 
 (bookmark-save)
