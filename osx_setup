@@ -9,7 +9,7 @@ brew install --cocoa emacs
 
 echo "
 (setq server-socket-dir (format \"tmp/emacs%d\" (user-uid))
-" > "$HOME/xdots/.emacs.d/elisp/macos.el"
+" > "$HOME/xdots/conf_.emacs.d/elisp/macos.el"
 
 echo "
 PATH=/usr/local/opt/coreutils/libexec/gnubin:\$PATH
