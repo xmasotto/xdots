@@ -17,6 +17,7 @@
   (setq elisp-files (cdr elisp-files)))
 
 ; Accept incoming emacsclients
+(setq server-socket-dir (format "/tmp/emacs%d" (user-uid)))
 (server-start)
 
 ; Hide away backup and autosave files

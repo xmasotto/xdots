@@ -8,10 +8,6 @@ brew install gnu-sed --default-names
 brew install --cocoa emacs
 
 echo "
-(setq server-socket-dir (format \"tmp/emacs%d\" (user-uid))
-" > "$HOME/xdots/conf_.emacs.d/elisp/macos.el"
-
-echo "
 PATH=/usr/local/opt/coreutils/libexec/gnubin:\$PATH
 PATH=/usr/local/opt/gnu-tar/libexec/gnubin:\$PATH
 PATH=/usr/local/opt/gnu-sed/bin:\$PATH
