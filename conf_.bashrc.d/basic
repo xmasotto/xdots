@@ -23,3 +23,9 @@ alias less="$PAGER"
 function hist {
     history ${1-10} | sed 's/^[ ]*[0-9]*[ ]*\(.*\)$/\1/g'
 }
+
+PATH="$PATH"$(cat $HOME/sdk/path | while read f; do
+    if [ -d "$HOME/sdk/$f" ]; then
+	echo ":$HOME/sdk/$f"
+    fi
+done | tr -d '\n')

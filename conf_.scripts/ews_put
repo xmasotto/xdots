@@ -1,7 +1,0 @@
-#!/bin/bash
-
-if [ $# -ne 2 ]; then
-   echo "Usage: $1 LOCAL_FILENAME EWS_FILENAME"
-fi
-
-scp -r $1 masotto2@remlnx.ews.illinois.edu:$2

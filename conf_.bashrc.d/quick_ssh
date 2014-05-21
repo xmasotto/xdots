@@ -10,5 +10,25 @@ function ssh2_add {
 }
 
 function ssh2 {
-    ssh "`eval $1`"
+    host="`eval $1`" && ssh "$host"
+}
+
+function scp2_translate {
+    name=`echo $1 | sed -n 's/\(\w*\):.*/\1/p'`
+    if [ "$name" ]; then
+	translated="`eval $name`" &&
+	echo $1 | sed "s/$name/$translated/g"
+    else
+	echo $1
+    fi
+}
+
+function scp2 {
+    if [ $# -ne 2 ]; then
+	echo "Usage: scp2 FILE1 FILE2"
+	return
+    fi
+    arg1="`scp2_translate $1`" &&
+    arg2="`scp2_translate $2`" &&
+    echo scp -r "$arg1" "$arg2"
 }
