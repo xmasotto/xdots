@@ -15,7 +15,7 @@ source $HOME/.bashrc
 
 EMACS_SERVER='/usr/local/Cellar/emacs/24.3/bin/emacs --daemon'
 EMACS_CLIENT='/usr/local/Cellar/emacs/24.3/bin/emacsclient'
-" > "$HOME?.profile"
+" > "$HOME/.profile"
 
 source "$HOME/.profile"
 xdots_setup
