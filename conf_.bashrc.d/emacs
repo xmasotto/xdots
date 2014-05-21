@@ -5,7 +5,7 @@ export EMACS_SERVER=${EMACS_SERVER:-/usr/bin/emacs --daemon}
 export EMACS_CLIENT=${EMACS_CLIENT:-/usr/bin/emacsclient}
 
 function emacs_server_process() {
-    ps aux | grep $EMACS_SERVER | grep -v 'grep'
+    ps aux | grep "$EMACS_SERVER" | grep -v 'grep'
 }
 
 function emacs_server_pid() {
