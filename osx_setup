@@ -14,7 +14,7 @@ PATH=/usr/local/opt/gnu-sed/bin:\$PATH
 source $HOME/xdots/bashrc
 
 EMACS_SERVER='/usr/local/Cellar/emacs/24.3/Emacs.app/Contents/MacOS/Emacs --daemon'
-EMACS_CLIENT='/usr/local/Cellar/emacs/24.3/bin/emacsclient'
+EMACS_CLIENT='/usr/local/Cellar/emacs/24.3/bin/emacsclient -nw'
 " > "$HOME/.profile"
 
 source "$HOME/.profile"

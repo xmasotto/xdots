@@ -86,7 +86,7 @@ function jup {
 
 	    date +"%D %T" >> "$running_log"
 	    echo $command_prefix $* >> "$running_log"
-	    $* &>> "$running_log"
+	    $* 1&>2 >> "$running_log"
 	    job_return_code=$?
 	    
 	    sleep 1
