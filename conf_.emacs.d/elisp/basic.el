@@ -1,7 +1,23 @@
 ; Syncs the clipboard and the emacs kill-ring
-(global-set-key "\C-w" 'clipboard-kill-region)
-(global-set-key "\M-w" 'clipboard-kill-ring-save)
+(global-set-key "\C-w" 'custom-kill-region)
+(global-set-key "\M-w" 'custom-kill-ring-save)
 (global-set-key "\C-y" 'clipboard-yank)
+ 
+(defun custom-kill-region ()
+  (interactive)
+  (let ((start (region-beginning))
+	(end (region-end)))
+    (shell-command-on-region start end "pbcopy")
+    (clipboard-kill-region start end)
+    (message "cut selection!")))
+ 
+(defun custom-kill-ring-save ()
+  (interactive)
+  (let ((start (region-beginning))
+	(end (region-end)))
+    (shell-command-on-region start end "pbcopy")
+    (clipboard-kill-ring-save start end)
+    (message "copied selection!")))
 
 ; Window sizing
 (defun set-window-width (width)
