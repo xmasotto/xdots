@@ -19,6 +19,15 @@
     (clipboard-kill-ring-save start end)
     (message "copied selection!")))
 
+; Alternate between beginning of line and text
+(defun smart-move-beginning-of-line ()
+  (interactive)
+  (let ((pt (point)))
+    (beginning-of-line)
+    (when (eq pt (point))
+      (beginning-of-line-text))))
+(global-set-key "\C-a" 'smart-move-beginning-of-line)
+
 ; Window sizing
 (defun set-window-width (width)
   (if (< (window-width) width)
@@ -35,3 +44,11 @@
 (global-set-key (kbd "M-0") 'balance-windows)
 (global-set-key (kbd "C-M--") 'toggle-window-width)
 (global-set-key (kbd "C-M-0") 'balance-windows)
+
+; code browsing
+(global-set-key (kbd "C-M-J") 
+		(lambda () (interactive) (next-line 8) (recenter)))
+(global-set-key (kbd "C-M-K") 
+		(lambda () (interactive) (previous-line 8) (recenter)))
+
+		

@@ -92,7 +92,7 @@
   (let ((original-point (point)))
     (mark-previous-command-out)
     (sit-for 0.1)
-    (call-interactively 'clipboard-kill-ring-save)
+    (call-interactively 'custom-kill-ring-save)
     (goto-char original-point)))
 (global-set-key (kbd "C-c M-w") 'save-command-out-to-kill-ring)
 
