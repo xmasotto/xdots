@@ -31,5 +31,5 @@ function scp2 {
     fi
     arg1="`scp2_translate $1`" &&
     arg2="`scp2_translate $2`" &&
-    echo scp -r "$arg1" "$arg2"
+    scp -r "$arg1" "$arg2"
 }
