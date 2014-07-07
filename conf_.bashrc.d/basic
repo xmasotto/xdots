@@ -15,10 +15,6 @@ alias grep='grep --color=auto'
 # emacs is my life
 export EDITOR="emacs"
 
-# Make paging work in emacs
-export PAGER="emacs_pager"
-alias less="$PAGER"
-
 # History
 function hist {
     history ${1-10} | sed 's/^[ ]*[0-9]*[ ]*\(.*\)$/\1/g'

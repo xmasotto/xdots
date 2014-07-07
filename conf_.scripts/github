@@ -1,7 +1,0 @@
-#!/bin/bash
-
-if [ $# -lt 1 ]; then
-  echo "Usage: $0 user/repository"
-fi
-
-git clone "git@github.com:$1.git"

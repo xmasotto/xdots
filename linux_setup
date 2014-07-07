@@ -5,4 +5,5 @@ xdots_setup
 
 cd "`dirname \"$0\"`"
 scripts_path="`readlink -f ./conf_.scripts`"
-sudo echo "export PATH=$scripts_path:\$PATH" > /etc/profile.d/xdots.sh
+sudo (echo "export PATH=$scripts_path:"'$PATH' > /etc/profile.d/xdots.sh)
+# todo fix this

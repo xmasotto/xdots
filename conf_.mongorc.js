@@ -1,4 +1,3 @@
-
 shellHelper["sd"] = function() { shellHelper["show"]("dbs") }
 shellHelper["sc"] = function() { shellHelper["show"]("collections") }
 

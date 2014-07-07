@@ -6,11 +6,11 @@ source ~/.bashrc.d/emacs
 num_args="`num_args \"$*\"`"
 
 if [ -z "$INSIDE_EMACS" ]; then
-    # Open a vanilla emacs as root if the file 
+    # Open a vanilla emacs as root if the file
     # or directory is not writable.
     if [ "$num_args" -ne "0" ]; then
 	if [ -a "$1" ]; then
-	    if ! [ -w "$1" ]; then 
+	    if ! [ -w "$1" ]; then
 		sudo emacs -Q $*
 		exit 0
 	    fi
@@ -21,7 +21,7 @@ if [ -z "$INSIDE_EMACS" ]; then
     existing_emacs="`emacs_server_process`"
     if [ -z "$existing_emacs" ]; then
 	$EMACS_SERVER &&
-	$EMACS_CLIENT -ce "(setup-shells)" &&
+	$EMACS_CLIENT -nw -ce "(setup-shells)" &&
 	echo "Sucessfully started emacs server."
     fi
 
