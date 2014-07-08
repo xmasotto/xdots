@@ -46,6 +46,7 @@
 (auto-set-bookmark "|z|_elisp" "~/.emacs.d/elisp")
 (auto-set-bookmark "|z|_scripts" "~/.scripts")
 (auto-set-bookmark "|z|_latex" "~/texmf/tex/latex")
+(auto-set-bookmark "|z|_xdots" "~/xdots")
 
 ; Automatically set bookmarks to directories within ~/coding
 (when (file-exists-p "~/coding")

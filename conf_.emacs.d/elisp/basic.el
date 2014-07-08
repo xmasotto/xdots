@@ -17,8 +17,22 @@
       (beginning-of-line-text))))
 (global-set-key "\C-a" 'smart-move-beginning-of-line)
 
-;; Appearance
+;; Line Numbering
+(defvar linum-modes nil)
 (add-hook 'find-file-hook 'linum-mode)
+(add-hook
+ 'after-change-major-mode-hook
+ (lambda ()
+   (when (or buffer-file-name
+	     (-contains? linum-modes major-mode))
+     (linum-mode))))
+
+;; Modes that should have line numbers
+(add-to-list 'linum-modes 'dired-mode)
+(add-to-list 'linum-modes 'Man-mode)
+(add-to-list 'linum-modes 'shell-mode)
+
+;; Appearance
 (load "modeline")
 (global-hl-line-mode)
 (menu-bar-mode 0)
