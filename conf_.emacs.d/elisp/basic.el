@@ -1,7 +1,5 @@
 ;; Automatically delete trailing whitespace
-(add-hook
- 'before-save-hook
- (lambda () (delete-trailing-whitespace)))
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;; Link kill buffer and osx clipboard
 (require 'pbcopy)
@@ -20,17 +18,16 @@
 (global-set-key "\C-a" 'smart-move-beginning-of-line)
 
 ;; Appearance
-(require 'color-theme)
-(color-theme-initialize)
+(add-hook 'find-file-hook 'linum-mode)
+(load "modeline")
+(global-hl-line-mode)
 (menu-bar-mode 0)
 (tool-bar-mode 0)
 (scroll-bar-mode -1)
-(global-hl-line-mode)
-(load "modeline")
 
 ;; Themes
 ;(load-theme 'darkburn t)
-;(load-theme 'cyberpunk t)
+;;(load-theme 'cyberpunk t)
 ;;(load-theme 'ample t)
 ;;(load-theme 'django t)
 (load-theme 'afternoon t)
