@@ -1,0 +1,33 @@
+#!/bin/bash
+
+vm_dir="$HOME/vagrant/vm"
+
+vm() {
+    if [ $# -ne 1 ]; then
+        echo Usage: vm_init VM_NAME
+        return
+    fi
+
+    vagrantfile="$vm_dir/$1/Vagrantfile"
+    if [ ! -f $vagrantfile ]; then
+        mkdir -p $vm_dir/$1
+        cp ~/vagrant/template $vagrantfile
+    fi
+    $EDITOR $vagrantfile
+}
+
+vm_run() {
+    (
+        if [ "$2" == "edit" ]; then
+            $EDITOR $vm_dir/$1/Vagrantfile
+        else
+            cd $vm_dir/$1
+            shift
+            vagrant $*
+        fi
+    )
+}
+
+for vm in $(ls $vm_dir); do
+    alias $vm="vagrant_run $vm"
+done
