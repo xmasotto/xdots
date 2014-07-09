@@ -1,0 +1,6 @@
+load '../../puppet/provision.rb'
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "https://dl.dropboxusercontent.com/u/15733306/vagrant/fedora-20-netinst-2014_01_05-minimal-puppet-guestadditions.box"
+  provision(config)
+end

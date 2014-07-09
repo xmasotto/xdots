@@ -1,0 +1,7 @@
+load '../../puppet/provision.rb'
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "inukshuk/debian74-puppet"
+  config.vm.hostname = "debian.localhost"
+  provision(config)
+end

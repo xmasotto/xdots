@@ -18,13 +18,9 @@ vm() {
 
 vm_run() {
     (
-        if [ "$2" == "edit" ]; then
-            $EDITOR $vm_dir/$1/Vagrantfile
-        else
-            cd $vm_dir/$1
-            shift
-            vagrant $*
-        fi
+        cd $vm_dir/$1
+        shift
+        vagrant $*
     )
 }
 

@@ -1,0 +1,7 @@
+load '../../puppet/provision.rb'
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "hfm4/centos-6-puppet"
+  config.vm.hostname = "centos.localhost"
+  provision(config)
+end
