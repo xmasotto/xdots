@@ -29,5 +29,5 @@ vm_run() {
 }
 
 for vm in $(ls $vm_dir); do
-    alias $vm="vagrant_run $vm"
+    alias $vm="vm_run $vm"
 done
