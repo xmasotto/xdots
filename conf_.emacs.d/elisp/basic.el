@@ -1,5 +1,9 @@
-;; Automatically delete trailing whitespace
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+;; Automatically delete trailing whitespace and tabs
+(add-hook
+ 'before-save-hook
+ (lambda ()
+   (untabify (point-min) (point-max))
+   (delete-trailing-whitespace)))
 
 ;; Link kill buffer and osx clipboard
 (require 'pbcopy)
@@ -24,7 +28,7 @@
  'after-change-major-mode-hook
  (lambda ()
    (when (or buffer-file-name
-	     (-contains? linum-modes major-mode))
+             (-contains? linum-modes major-mode))
      (linum-mode))))
 
 ;; Modes that should have line numbers
@@ -44,4 +48,19 @@
 ;;(load-theme 'cyberpunk t)
 ;;(load-theme 'ample t)
 ;;(load-theme 'django t)
+;;(load-theme 'solarized-dark t)
 (load-theme 'afternoon t)
+
+;; Helm
+(helm-mode 1)
+(global-set-key (kbd "M-SPC") 'helm-mini)
+
+;; Disable Pop-ups
+(defadvice yes-or-no-p (around prevent-dialog activate)
+  "Prevent yes-or-no-p from activating a dialog"
+  (let ((use-dialog-box nil))
+    ad-do-it))
+(defadvice y-or-n-p (around prevent-dialog-yorn activate)
+  "Prevent y-or-n-p from activating a dialog"
+  (let ((use-dialog-box nil))
+    ad-do-it))
