@@ -2,6 +2,7 @@
 (source marmalade)
 (source melpa)
 
+(depends-on "ack")
 (depends-on "afternoon-theme")
 (depends-on "ample-theme")
 (depends-on "bind-key")
@@ -38,6 +39,7 @@
 (depends-on "prodigy")
 (depends-on "projectile")
 (depends-on "puppet-mode")
+(depends-on "rust-mode")
 (depends-on "s")
 (depends-on "shut-up")
 (depends-on "smartparens")

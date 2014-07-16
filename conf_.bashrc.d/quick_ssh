@@ -33,3 +33,14 @@ function scp2 {
     arg2="`scp2_translate $2`" &&
     scp -r "$arg1" "$arg2"
 }
+
+function sync2 {
+    if [ $# -ne 1 ]; then
+	echo "Usage: sync2 DEST"
+	return
+    fi
+    changed="$(git diff --name-only HEAD)"
+    if [[ $? && "$changed" ]]; then
+	scp2 $changed $1/
+    fi
+}

@@ -2,7 +2,7 @@
 (add-hook
  'before-save-hook
  (lambda ()
-   (untabify (point-min) (point-max))
+;   (untabify (point-min) (point-max))
    (delete-trailing-whitespace)))
 
 ;; Link kill buffer and osx clipboard

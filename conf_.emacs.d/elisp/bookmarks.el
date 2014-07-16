@@ -45,7 +45,7 @@
 (auto-set-bookmark "|z|_bashrc.d" "~/.bashrc.d")
 (auto-set-bookmark "|z|_elisp" "~/.emacs.d/elisp")
 (auto-set-bookmark "|z|_scripts" "~/.scripts")
-(auto-set-bookmark "|z|_puppet" "~/vagrants/puppet")
+(auto-set-bookmark "|z|_puppet" "~/vagrant/puppet")
 
 ; Automatically set bookmarks to directories within ~/coding
 (when (file-exists-p "~/coding")

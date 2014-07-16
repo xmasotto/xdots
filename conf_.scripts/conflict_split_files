@@ -19,9 +19,9 @@ def main():
 
   elif sys.argv[1] == "create":
     merge_functions = [
+        maybe_git_conflict_split,
         maybe_p4_conflict_split,
         maybe_diff3_conflict_split,
-        maybe_git_conflict_split
     ]
     filename = sys.argv[2]
     text = open(filename, 'r').read()
@@ -44,7 +44,7 @@ def main():
 def maybe_p4_conflict_split(filename, text):
   p4_conflict = re.compile("{0}\n{4}{2}\n{4}{2}\n{4}{1}\n?".format(
       div_gt, div_lt, div_eq, div_pipe, inner_code), re.DOTALL)
-  if re.findall(p4_conflict, text):
+  if re.search(p4_conflict, text):
     print("Perforce Merge Detected.")
     open(filename_between(filename, "#theirs#"), 'w').write(
         re.sub(p4_conflict, r'\2', text))
@@ -57,7 +57,7 @@ def maybe_p4_conflict_split(filename, text):
 def maybe_diff3_conflict_split(filename, text):
   d3_conflict = re.compile("{1}\n{4}{3}\n{4}{2}\n{4}{0}\n".format(
       div_gt, div_lt, div_eq, div_pipe, inner_code), re.DOTALL)
-  if re.findall(d3_conflict, text):
+  if re.search(d3_conflict, text):
     print("Diff3 Merge Detected.")
     open(filename_between(filename, "#yours#"), 'w').write(
         re.sub(d3_conflict, r'\1', text))
@@ -70,7 +70,7 @@ def maybe_diff3_conflict_split(filename, text):
 def maybe_git_conflict_split(filename, text):
   git_conflict = re.compile("{1}\n{4}{2}\n{4}{0}\n".format(
       div_gt, div_lt, div_eq, div_pipe, inner_code), re.DOTALL)
-  if re.findall(git_conflict, text):
+  if re.search(git_conflict, text):
     print("Git Merge Detected.")
     open(filename_between(filename, "#yours#"), 'w').write(
         re.sub(git_conflict, r'\1', text))
