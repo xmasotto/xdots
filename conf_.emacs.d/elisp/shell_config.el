@@ -4,7 +4,7 @@
 (add-hook 'shell-mode-hook
           (lambda ()
             (dirtrack-mode 1)
-            (setq dirtrack-list '("^|PROMPT|\\([^|]*\\)|" 1 nil))
+            (setq dirtrack-list '("|PROMPT|\\([^|]*\\)|" 1 nil))
             (add-hook 'comint-preoutput-filter-functions
                       'dirtrack-filter-out-pwd-prompt t t)))
 (defun dirtrack-filter-out-pwd-prompt (string)
@@ -120,8 +120,8 @@
 	(list 'if '(string-match-p (regexp-quote "'") args)
 	      (list 'concat command-name " " 'args)
 	      (list 'concat command-name " '" 'args "'"))))
-  
-(global-set-key (kbd "C-c A") 
+
+(global-set-key (kbd "C-c A")
 		(make-command-on-out "awk " (get-command-auto-quote "awk")))
 (global-set-key (kbd "C-c S")
 		(make-command-on-out "sed " (get-command-auto-quote "sed")))
@@ -156,10 +156,10 @@
 	(shell name))))
 
 (defun dired-change-shell (shellname)
-  (let ((dirname 
-	 (cond 
+  (let ((dirname
+	 (cond
 	  (dired-directory dired-directory)
-	  (buffer-file-name 
+	  (buffer-file-name
 	   (file-name-directory (buffer-file-name)))
 	  (t nil))))
     (when dirname
