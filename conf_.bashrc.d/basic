@@ -5,8 +5,19 @@ if [ "$INSIDE_EMACS" ]; then
   PS1="|PROMPT|\w|$PS1"
 fi
 
-# easy source
-alias s='source ~/.bashrc;'
+if [ -z "$_first_time" ]; then
+    ORIGINAL_PATH_="$PATH"
+    _first_time=1
+fi
+
+# easy source, resets path variables first
+function s {
+    for v in $(set | grep '^\w*PATH$' | cut -d= -f1); do
+	unset $v
+    done
+    export PATH="$ORIGINAL_PATH_"
+    source ~/.bashrc
+}
 
 # colors
 alias ls='ls --color=auto'
