@@ -25,22 +25,48 @@ function scp2_translate {
 }
 
 function scp2 {
-    if [ $# -ne 2 ]; then
-	echo "Usage: scp2 FILE1 FILE2"
+    if [ $# -lt 2 ]; then
+	echo "Usage: scp2 [SRC ...] DEST"
 	return
     fi
-    arg1="`scp2_translate $1`" &&
-    arg2="`scp2_translate $2`" &&
-    scp -r "$arg1" "$arg2"
+
+    scp_args=""
+    for file in $@; do
+	scp_args="$scp_args $(scp2_translate $file)"
+    done
+    scp -r $scp_args
 }
 
 function sync2 {
+    OPTIND=
+    SYNC_ALL=
+    while getopts "a" OPTION; do
+	case $OPTION in
+	    a) SYNC_ALL=1
+		;;
+	esac
+    done
+    shift $(($OPTIND - 1))
+
     if [ $# -ne 1 ]; then
 	echo "Usage: sync2 DEST"
 	return
     fi
-    changed="$(git diff --name-only HEAD)"
+
+    if [ "$SYNC_ALL" ]; then
+	changed="$(git ls-tree -r --name-only --full-tree HEAD)"
+    else
+	changed="$(git diff --name-only HEAD)"
+    fi
+
     if [[ $? && "$changed" ]]; then
-	scp2 $changed $1/
+	(cd "$(git rev-parse --show-toplevel)"
+	    for file in $changed; do
+		target=".tmp/$(dirname $file)"
+		mkdir -p $target
+		cp $file $target
+	    done
+	    scp2 .tmp/* $1/
+	    rm -rf .tmp)
     fi
 }
