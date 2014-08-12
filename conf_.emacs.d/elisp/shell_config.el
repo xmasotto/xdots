@@ -12,11 +12,6 @@
       (replace-match "" t t string 0)
     string))
 
-; Extended Bash Completion
-(add-to-list 'load-path "~/.emacs.d/lib/bash-completion")
-(require 'bash-completion)
-(bash-completion-setup)
-
 ; Delete the Bash Completion window when a command is entered.
 ; If a new window was created, delete the window.
 (setq completion-buffer-names
