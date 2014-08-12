@@ -12,7 +12,7 @@ PATH=/usr/local/opt/coreutils/libexec/gnubin:\$PATH
 PATH=/usr/local/opt/gnu-tar/libexec/gnubin:\$PATH
 PATH=/usr/local/opt/gnu-sed/bin:\$PATH
 
-EMACS_SERVER='/usr/local/Cellar/emacs/24.3/Emacs.app/Contents/MacOS/Emacs --daemon'
+EMACS='/usr/local/Cellar/emacs/24.3/Emacs.app/Contents/MacOS/Emacs'
 EMACS_CLIENT='/usr/local/Cellar/emacs/24.3/bin/emacsclient'
 
 source $HOME/xdots/bashrc

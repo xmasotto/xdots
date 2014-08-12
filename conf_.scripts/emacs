@@ -21,13 +21,13 @@ if [ -z "$INSIDE_EMACS" ]; then
     existing_emacs="`emacs_server_process`"
     if [ -z "$existing_emacs" ]; then
 	$EMACS_SERVER &&
-	$EMACS_CLIENT -nw -ce "(setup-shells)" &&
+	# $EMACS_CLIENT -nw -c -e "(setup-shells)" &&
 	echo "Sucessfully started emacs server."
     fi
 
     if [ "$num_args" -eq "0" ]; then
         # Start at the home screen.
-	$EMACS_CLIENT $* -ce "(init-emacs-client)"
+	$EMACS_CLIENT $* -c
     else
 	$EMACS_CLIENT -c $*
     fi
@@ -35,7 +35,7 @@ fi
 
 if [ "$INSIDE_EMACS" ]; then
     if [ "$1" ]; then
-	$EMACS_CLIENT $*
+	$EMACS_CLIENT -a "$EMACS_SERVER" $*
     else
 	echo "Emacs inside Emacs. We must go deeper."
     fi

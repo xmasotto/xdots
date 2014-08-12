@@ -222,6 +222,6 @@
   (t6) (delete-other-windows)
   (t7) (delete-other-windows)
   (t8) (delete-other-windows)
-  (t9) (delete-other-windows)
-  (switch-to-buffer "*GNU Emacs*")
-  (save-buffers-kill-terminal))
+  (t9) (delete-other-windows))
+
+(setup-shells)

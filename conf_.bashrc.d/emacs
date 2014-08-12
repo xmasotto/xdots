@@ -1,10 +1,9 @@
 #!/bin/bash
 source ~/.bashrc.d/util
 
-export EMACS_SERVER=${EMACS_SERVER:-/usr/bin/emacs --daemon}
-
+export EMACS=${EMACS:-/usr/bin/emacs}
+export EMACS_SERVER=${EMACS_SERVER:-"$EMACS --daemon"}
 export EMACS_CLIENT=${EMACS_CLIENT:-/usr/bin/emacsclient}
-EMACS_CLIENT="$EMACS_CLIENT --socket-name=/tmp/emacs$UID/server"
 
 function emacs_server_process() {
     ps wwaux | grep "$EMACS_SERVER" | grep -v 'grep'

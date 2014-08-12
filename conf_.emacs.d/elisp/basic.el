@@ -1,8 +1,9 @@
+(setq initial-scratch-message "Welcome to Emacs, Xander :D")
+
 ;; Automatically delete trailing whitespace and tabs
 (add-hook
  'before-save-hook
  (lambda ()
-;   (untabify (point-min) (point-max))
    (delete-trailing-whitespace)))
 
 ;; Link kill buffer and osx clipboard

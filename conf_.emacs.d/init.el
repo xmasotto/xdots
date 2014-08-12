@@ -1,6 +1,25 @@
+;; Add additional package repositories
+(require 'package)
+(package-initialize)
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")
+                         ("melpa" . "http://melpa.milkbox.net/packages/")))
+
 ;; Accept incoming emacsclients
 (setq server-socket-dir (format "/tmp/emacs%d" (user-uid)))
 (server-start)
+
+; Cygwin
+(when (string= system-type "windows-nt")
+  (add-hook
+   'find-file-hook
+   (lambda ()
+     (interactive)
+     (set-buffer-file-coding-system 'iso-latin-1-unix t)))
+  (load "~/.emacs.d/lib/cygwin-mount")
+  (setq explicit-shell-file-name "C:/cygwin/bin/bash.exe")
+  (setq shell-file-name explicit-shell-file-name)
+  (add-to-list 'exec-path "C:/cygwin/bin"))
 
 ; Initialize Cask
 (require 'cask)
@@ -18,17 +37,3 @@
  '(auto-save-file-name-transforms '((".*" "~/.emacs.d/autosaves/\\1" t)))
  '(backup-directory-alist '((".*" . "~/.emacs.d/backups/"))))
 (make-directory "~/.emacs.d/autosaves" t)
-
-;; When an emacs client is started, bump to the home screen
-;; instead of the scratch buffer.
-(defun init-emacs-client ()
-  (when (get-buffer "*GNU Emacs*")
-    (kill-buffer "*GNU Emacs*"))
-  (if (eq window-system 'x)
-      (fancy-startup-screen)
-    (display-startup-screen))
-  (switch-to-buffer
-   (get-buffer "*scratch*"))
-  (switch-to-buffer
-   (get-buffer "*GNU Emacs*"))
-  "All your emacs are belong to us.")
