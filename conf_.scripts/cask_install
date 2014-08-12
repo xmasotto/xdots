@@ -1,7 +1,8 @@
 #!/bin/bash
 
+source ~/.bashrc.d/emacs
+
 for pkg in $(grep 'depends-on' Cask | cut -d\" -f2); do
     echo "Installing $pkg"
     emacsclient -e "(package-install '$pkg)"
 done
-

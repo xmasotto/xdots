@@ -25,4 +25,3 @@ xdots_setup
 #choco install pip
 
 #alias pip="/cygdrive/c/tools/python/scripts/pip"
-
