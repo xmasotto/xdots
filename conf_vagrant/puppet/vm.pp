@@ -15,7 +15,6 @@ class base_config {
 }
 include base_config
 
-
 class { 'python':
   version => 'system',
   dev => true,
@@ -46,3 +45,14 @@ class python_packages {
 
 include python_wheel
 include python_packages
+
+class home_symlinks {
+  exec { "/bin/ln -fs /xdots /home/vagrant/xdots || true": }
+  exec { "/bin/ln -fs /coding /home/vagrant/coding || true": }
+}
+
+class xdots_setup {
+  require home_symlinks
+  exec { "/bin/su vagrant -c /home/vagrant/xdots/linux_setup": }
+}
+include xdots_setup

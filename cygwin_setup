@@ -3,6 +3,10 @@
 # https://chocolatey.org
 # choco install cygwin
 # choco install git
+# choco install vagrant
+# choco install virtualbox
+# choco install openssh
+# vagrant plugin install vagrant-vbguest
 
 net session &>/dev/null
 if [ $? -ne 0 ]; then
