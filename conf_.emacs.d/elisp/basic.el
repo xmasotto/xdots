@@ -1,5 +1,3 @@
-(setq initial-scratch-message "Welcome to Emacs, Xander :D")
-
 ;; Automatically delete trailing whitespace and tabs
 (add-hook
  'before-save-hook

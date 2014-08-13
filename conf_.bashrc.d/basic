@@ -30,12 +30,3 @@ export EDITOR="emacs"
 function hist {
     history ${1-10} | sed 's/^[ ]*[0-9]*[ ]*\(.*\)$/\1/g'
 }
-
-# SDK add to path
-if [ -f "$HOME/sdk/path" ]; then
-    PATH="$PATH"$(cat $HOME/sdk/path | while read f; do
-	    if [ -d "$HOME/sdk/$f" ]; then
-		echo ":$HOME/sdk/$f"
-	    fi
-	done | tr -d '\n')
-fi
