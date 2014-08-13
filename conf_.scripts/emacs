@@ -27,7 +27,7 @@ if [ -z "$INSIDE_EMACS" ]; then
 
     if [ "$num_args" -eq "0" ]; then
         # Start at the home screen.
-	$EMACS_CLIENT $* -c
+	$EMACS_CLIENT $* -c --no-wait
     else
 	$EMACS_CLIENT -c $*
     fi
