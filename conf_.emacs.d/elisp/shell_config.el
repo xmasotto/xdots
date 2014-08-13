@@ -1,3 +1,23 @@
+(defvar errors-to-ignore nil)
+(add-to-list 'errors-to-ignore
+	     "bash: cannot set terminal process group (-1)")
+(add-to-list 'errors-to-ignore
+	     "bash: no job control in this shell")
+
+; Filters out lines in shell output that contain specific error messages
+(defun filter-out-errors (string)
+  (mapconcat
+   'identity
+   (remove-if
+    (lambda (line)
+      (-any? (lambda (err) (string-match err line)) errors-to-ignore))
+    (split-string string "\n"))
+   "\n"))
+(add-hook 'shell-mode-hook
+	  (lambda ()
+	    (add-hook 'comint-preoutput-filter-functions
+		      'filter-out-errors)))
+
 ; Setup DirTrack n- to make sure emacs knows the working directory of
 ; each shell, regardless of how many are simultaneously open.
 (require 'dirtrack)
@@ -218,5 +238,4 @@
   (t7) (delete-other-windows)
   (t8) (delete-other-windows)
   (t9) (delete-other-windows))
-
 (setup-shells)

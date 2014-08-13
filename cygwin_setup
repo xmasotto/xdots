@@ -13,7 +13,7 @@ fi
 
 echo "
 export EMACS=/cygdrive/c/ProgramData/chocolatey/bin/emacs
-export EMACS_CLIENT=\"emacsclientw.exe -na runemacs.exe\"
+export EMACS_CLIENT=\"emacsclient -a runemacs.exe\"
 source $HOME/xdots/bashrc
 " > "$HOME/.profile"
 
