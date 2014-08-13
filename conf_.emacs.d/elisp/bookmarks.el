@@ -28,33 +28,39 @@
    (bookmark-bind-shell 8)
    (bookmark-bind-shell 9)))
 
-; Delete all bookmarks with underscores
-(bookmark-bmenu-list)
-(shell-command-on-region (point-min) (point-max)
-			 "awk '/\\|c|z\\|_/{print $1}'" "bookmarks_temp")
-(with-current-buffer "bookmarks_temp"
-  (unless (s-blank? (buffer-string))
-    (mapc 'bookmark-delete (split-string (buffer-string)))))
-
-; Automatically set xdots bookmarks
+;; Automatically set xdots bookmarks
 (defun auto-set-bookmark (name filename)
   (with-current-buffer (find-file filename)
     (bookmark-set name)
     (kill-buffer)))
 
-(auto-set-bookmark "|z|_bashrc.d" "~/.bashrc.d")
-(auto-set-bookmark "|z|_elisp" "~/.emacs.d/elisp")
-(auto-set-bookmark "|z|_scripts" "~/.scripts")
-(auto-set-bookmark "|z|_puppet" "~/vagrant/puppet")
+(defun update-bookmarks ()
+  (interactive)
+  ;; Delete all bookmarks with underscores
+  (bookmark-bmenu-list)
+  (shell-command-on-region (point-min) (point-max)
+			   "awk '/\\|c|z\\|_/{print $1}'" "bookmarks_temp")
+  (with-current-buffer "bookmarks_temp"
+    (unless (s-blank? (buffer-string))
+      (mapc 'bookmark-delete (split-string (buffer-string))))
+    (kill-buffer))
 
-; Automatically set bookmarks to directories within ~/coding
-(when (file-exists-p "~/coding")
-  (mapc
-   (lambda (filename)
-     (when (file-accessible-directory-p filename)
-       (auto-set-bookmark
-	(concat "|c|_" (file-name-nondirectory filename) )
-	filename)))
-   (directory-files "~/coding" t "^[^.]")))
+  (auto-set-bookmark "|z|_bashrc.d" "~/.bashrc.d")
+  (auto-set-bookmark "|z|_elisp" "~/.emacs.d/elisp")
+  (auto-set-bookmark "|z|_scripts" "~/.scripts")
+  (auto-set-bookmark "|z|_puppet" "~/vagrant/puppet")
 
-(bookmark-save)
+  ;; Automatically set bookmarks to directories within ~/coding
+  (when (file-exists-p "~/coding")
+    (mapc
+     (lambda (filename)
+       (when (file-accessible-directory-p filename)
+	 (auto-set-bookmark
+	  (concat "|c|_" (file-name-nondirectory filename) )
+	  filename)))
+     (directory-files "~/coding" t "^[^.]")))
+
+  (bookmark-save))
+
+(unless (string= system-type "windows-nt")
+  (update-bookmarks))
