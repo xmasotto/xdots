@@ -1,9 +1,0 @@
-#!/bin/bash
-cd ~ &&
-curl -L https://github.com/xmasotto/xdots/archive/master.zip -o xdots.zip &&
-unzip xdots.zip &&
-rm xdots.zip &&
-mv xdots-master xdots
-#. xdots/bashrc &&
-#xdots_setup &&
-#. xdots/bashrc
