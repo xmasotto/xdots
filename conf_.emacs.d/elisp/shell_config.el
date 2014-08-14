@@ -72,10 +72,9 @@
 (add-hook 'comint-input-filter-functions 'delete-completion-window-buffer)
 
 ; View the command output in a compilation-mode buffer
-(defun view-compile-out ()
-  (interactive)
+(defun view-shell-output ()
   (let ((original-point (point))
-        (buffer-name (format "*%s-shell-compilation*" (buffer-name))))
+        (buffer-name (format "*%s-shell-output*" (buffer-name))))
     (comint-previous-prompt 1)
     (let ((begin (point)))
       (comint-next-prompt 1)
@@ -87,8 +86,21 @@
     (goto-char original-point)
     (switch-to-buffer buffer-name)
     (compilation-mode)))
-(global-set-key (kbd "C-c v") 'view-compile-out)
-(global-set-key (kbd "C-c C-v") 'view-compile-out)
+
+(defun view-compile-output ()
+  (interactive)
+  (view-shell-output)
+  (compilation-mode))
+(global-set-key (kbd "C-c v") 'view-compile-output)
+(global-set-key (kbd "C-c C-v") 'view-compile-output)
+
+(require 'ack)
+(defun view-grep-output ()
+  (interactive)
+  (view-shell-output)
+  (ack-mode))
+(global-set-key (kbd "C-c g") 'view-grep-output)
+(global-set-key (kbd "C-c C-g") 'view-grep-output)
 
 ; Select the previous command's output.
 (defun mark-previous-command-out ()

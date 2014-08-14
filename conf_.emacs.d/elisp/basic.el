@@ -4,6 +4,8 @@
  (lambda ()
    (delete-trailing-whitespace)))
 
+(setq-default tab-width 4)
+
 ;; Link kill buffer and osx clipboard
 (require 'pbcopy)
 (turn-on-pbcopy)
