@@ -23,7 +23,7 @@ function xdots_teardown() {
     sed -i 's/^.*#xdots_gen.*$//g' "$HOME/.bashrc"
 }
 
-function xdots_update { 
+function xdots_update {
     if [ -d "$HOME/xdots/.git" ]; then
 	"You probably don't want to do that."
     else

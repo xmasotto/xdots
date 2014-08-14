@@ -1,1 +1,1 @@
-echo emacs | cygwin
+echo emacs --no-wait %* | cygwin

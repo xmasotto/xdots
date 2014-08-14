@@ -62,5 +62,4 @@
 
   (bookmark-save))
 
-(unless (string= system-type "windows-nt")
-  (update-bookmarks))
+(update-bookmarks)

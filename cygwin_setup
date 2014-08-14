@@ -7,6 +7,7 @@
 # choco install virtualbox
 # choco install openssh
 # vagrant plugin install vagrant-vbguest
+# add "call %HOME%\.startup.bat" to start of C:\Cygwin\Cygwin.bat
 
 net session &>/dev/null
 if [ $? -ne 0 ]; then

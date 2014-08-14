@@ -17,7 +17,7 @@
      (interactive)
      (set-buffer-file-coding-system 'iso-latin-1-unix t)))
   (load "~/.emacs.d/lib/cygwin-mount")
-  (setq explicit-shell-file-name "C:/cygwin/bin/bash.exe")
+  (setq explicit-shell-file-name "C:/cygwin/Cygwin.bat")
   (setq shell-file-name explicit-shell-file-name)
   (add-to-list 'exec-path "C:/cygwin/bin"))
 
