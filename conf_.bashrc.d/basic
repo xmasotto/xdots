@@ -31,5 +31,14 @@ function hist {
     history ${1-10} | sed 's/^[ ]*[0-9]*[ ]*\(.*\)$/\1/g'
 }
 
+# Tags
+function tag {
+	rm /tmp/files_to_tag
+	for ext in $*; do
+		find . -name "*.$ext" >> /tmp/files_to_tag
+	done
+	etags - < /tmp/files_to_tag
+}
+
 # windows aliases
 alias msbuild="msbuild.exe"

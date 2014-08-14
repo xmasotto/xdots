@@ -52,6 +52,12 @@
 ;;(load-theme 'solarized-dark t)
 (load-theme 'afternoon t)
 
+;; Swap out a new TAGS table
+(defun taggy ()
+  (interactive)
+  (tags-reset-tags-tables)
+  (call-interactively 'visit-tags-table))
+
 ;; Helm
 (helm-mode 1)
 (global-set-key (kbd "M-SPC") 'helm-mini)
