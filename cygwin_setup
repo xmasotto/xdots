@@ -1,13 +1,33 @@
 #!/bin/bash
 
+## Install Chocolatey
 # https://chocolatey.org
-# choco install cygwin
+
+## Install Cygwin (32-bit)
+# choco install cygwin -x86
+# add "call %HOME%\.startup.bat" to start of C:\tools\cygwin\Cygwin.bat
+# mount -c /
+# mount -m > /etc/fstab
+
+## MinGW
+# install MinGW compilers using mingw-get
+
+## Install apt-cyg
+# install wget with setup.exe
+# wget https://raw.githubusercontent.com/transcode-open/apt-cyg/master/apt-cyg
+# chmod +x apt-cyg
+# mv apt-cyg /bin
+
+## Install development tools
 # choco install git
+# apt-cyg install gcc-core gcc-g++
+# apt-cyg install make
+# apt-cyg install openssh
+
+## Install virtual machines
 # choco install vagrant
 # choco install virtualbox
-# choco install openssh
 # vagrant plugin install vagrant-vbguest
-# add "call %HOME%\.startup.bat" to start of C:\Cygwin\Cygwin.bat
 
 net session &>/dev/null
 if [ $? -ne 0 ]; then
@@ -21,7 +41,7 @@ if [[ "$CYGWIN" != *winsymlinks:native* ]]; then
 fi
 
 echo "
-export EMACS=/cygdrive/c/ProgramData/chocolatey/bin/emacs
+export EMACS=/c/ProgramData/chocolatey/bin/emacs
 export EMACS_CLIENT=\"emacsclient -a runemacs.exe\"
 source $HOME/xdots/bashrc
 " > "$HOME/.profile"

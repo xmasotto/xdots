@@ -13,10 +13,11 @@ fi
 # easy source, resets path variables first
 function s {
     for v in $(set | grep '^\w*PATH$' | cut -d= -f1); do
-	unset $v
+		unset $v
     done
     export PATH="$ORIGINAL_PATH_"
-    source ~/.bashrc
+	unalias -a
+	source ~/xdots/bashrc
 }
 
 # colors
@@ -40,5 +41,32 @@ function tag {
 	etags - < /tmp/files_to_tag
 }
 
-# windows aliases
 alias msbuild="msbuild.exe"
+
+function mingw {
+	if [ -z "$(echo $PS1 | grep '(mingw)')" ]; then
+		rm -rf ~/mingw_bin
+		mkdir -p ~/mingw_bin
+
+		#MSYS_OVERWRITE="sed.exe"
+		MSYS_OVERWRITE=""
+		for f in "$MSYS_OVERWRITE"; do
+			if [ "$f" ]; then
+				cp -f "$(which $f)" ~/mingw_bin
+			fi
+		done
+
+		export PATH="/c/mingw/bin:$PATH"
+		export PATH="/c/mingw/msys/1.0/bin:$PATH"
+		export PATH="$HOME/mingw_bin:$PATH"
+
+		PS1="(mingw)$PS1"
+		alias msys="bash -c"
+	fi
+}
+
+if [ "$(uname -o)" == "Cygwin" ]; then
+	export PYTHONPATH=$(cygpath -p "$PYTHONPATH" 2>/dev/null)
+	unset PYTHONHOME
+#	alias sed="sed -r"
+fi
