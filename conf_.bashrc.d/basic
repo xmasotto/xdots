@@ -48,25 +48,20 @@ function mingw {
 		rm -rf ~/mingw_bin
 		mkdir -p ~/mingw_bin
 
-		#MSYS_OVERWRITE="sed.exe"
-		MSYS_OVERWRITE=""
-		for f in "$MSYS_OVERWRITE"; do
-			if [ "$f" ]; then
-				cp -f "$(which $f)" ~/mingw_bin
-			fi
-		done
-
 		export PATH="/c/mingw/bin:$PATH"
-		export PATH="/c/mingw/msys/1.0/bin:$PATH"
-		export PATH="$HOME/mingw_bin:$PATH"
+		export PATH="/c/msys64/usr/bin:$PATH"
 
 		PS1="(mingw)$PS1"
-		alias msys="bash -c"
+		function msys {
+			bash -c "$*"
+		}
+		function pacman {
+			msys pacman $*
+		}
 	fi
 }
 
 if [ "$(uname -o)" == "Cygwin" ]; then
 	export PYTHONPATH=$(cygpath -p "$PYTHONPATH" 2>/dev/null)
 	unset PYTHONHOME
-#	alias sed="sed -r"
 fi

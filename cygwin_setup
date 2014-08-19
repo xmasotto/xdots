@@ -1,28 +1,17 @@
 #!/bin/bash
 
-## Install Chocolatey
-# https://chocolatey.org
-
-## Install Cygwin (32-bit)
-# choco install cygwin -x86
-# add "call %HOME%\.startup.bat" to start of C:\tools\cygwin\Cygwin.bat
+## Install Cygwin (+ wget)
+# install apt-cyg
+# apt-cyg install openssh git
+# add "call C:\Users\xmasotto\.startup.bat" to start of C:\cygwin\Cygwin.bat
 # mount -c /
+# mount C:\Users /home
 # mount -m > /etc/fstab
 
-## MinGW
-# install MinGW compilers using mingw-get
-
-## Install apt-cyg
-# install wget with setup.exe
-# wget https://raw.githubusercontent.com/transcode-open/apt-cyg/master/apt-cyg
-# chmod +x apt-cyg
-# mv apt-cyg /bin
-
-## Install development tools
-# choco install git
-# apt-cyg install gcc-core gcc-g++
-# apt-cyg install make
-# apt-cyg install openssh
+## Install MinGW
+## Install MSYS2
+## Install Chocolatey
+## Install emacs (via choco)
 
 ## Install virtual machines
 # choco install vagrant

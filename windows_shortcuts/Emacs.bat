@@ -1,1 +1,1 @@
-echo emacs --no-wait %* | cygwin
+echo emacs --no-wait %* | C:\cygwin\cygwin.bat
