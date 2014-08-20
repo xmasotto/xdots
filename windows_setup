@@ -1,0 +1,30 @@
+#!/bin/bash
+
+## Install MSYS2
+# pacman -S git openssh
+# pacman -S base-devel mingw-w64-i686-toolchain
+
+## Install Chocolatey
+# choco install emacs
+# choco install vagrant
+# choco install virtualbox
+
+net session &>/dev/null
+if [ $? -ne 0 ]; then
+    echo "Must be root"
+    exit 1
+fi
+
+if [[ "$MSYS" != *winsymlinks:native* ]]; then
+    echo "winsymlinks:native must be in \$MSYS"
+    exit 1
+fi
+
+echo "
+export EMACS=/c/ProgramData/chocolatey/bin/emacs
+export EMACS_CLIENT=\"emacsclient -a runemacs.exe\"
+source $HOME/xdots/bashrc
+" > "$HOME/.profile"
+
+source "$HOME/.profile"
+xdots_setup
