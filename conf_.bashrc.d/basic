@@ -43,25 +43,7 @@ function tag {
 
 alias msbuild="msbuild.exe"
 
-function mingw {
-	if [ -z "$(echo $PS1 | grep '(mingw)')" ]; then
-		rm -rf ~/mingw_bin
-		mkdir -p ~/mingw_bin
-
-		export PATH="/c/mingw/bin:$PATH"
-		export PATH="/c/msys64/usr/bin:$PATH"
-
-		PS1="(mingw)$PS1"
-		function msys {
-			bash -c "$*"
-		}
-		function pacman {
-			msys pacman $*
-		}
-	fi
-}
-
-if [ "$(uname -o)" == "Cygwin" ]; then
+if [ "$(uname -o)" == "Msys" ]; then
 	export PYTHONPATH=$(cygpath -p "$PYTHONPATH" 2>/dev/null)
 	unset PYTHONHOME
 fi

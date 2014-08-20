@@ -18,9 +18,10 @@
      (interactive)
      (set-buffer-file-coding-system 'iso-latin-1-unix t)))
   (load "~/.emacs.d/lib/cygwin-mount")
-  (setq explicit-shell-file-name "C:/cygwin/Cygwin.bat")
+  (setq explicit-shell-file-name "~/xdots/windows_shortcuts/Shell32.bat")
   (setq shell-file-name explicit-shell-file-name)
-  (add-to-list 'exec-path "C:/cygwin/bin"))
+  (add-to-list 'exec-path "C:/msys64/mingw32/bin")
+  (add-to-list 'exec-path "C:/msys64/usr/bin"))
 
 ; Initialize Cask
 (require 'cask)

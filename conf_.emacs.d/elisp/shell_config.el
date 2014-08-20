@@ -1,8 +1,12 @@
 (defvar errors-to-ignore nil)
 (add-to-list 'errors-to-ignore
-	     "bash: cannot set terminal process group (-1)")
+			 "bash: cannot set terminal process group (-1)")
 (add-to-list 'errors-to-ignore
-	     "bash: no job control in this shell")
+			 "bash: no job control in this shell")
+(add-to-list 'errors-to-ignore
+			 "id: cannot find name for group ID")
+(add-to-list 'errors-to-ignore
+			 "sed: can't read /tmp/group.mkgroup")
 
 ; Filters out lines in shell output that contain specific error messages
 (defun filter-out-errors (string)
