@@ -40,10 +40,3 @@ function tag {
 	done
 	etags - < /tmp/files_to_tag
 }
-
-alias msbuild="msbuild.exe"
-
-if [ "$(uname -o)" == "Msys" ]; then
-	export PYTHONPATH=$(cygpath -p "$PYTHONPATH" 2>/dev/null)
-	unset PYTHONHOME
-fi

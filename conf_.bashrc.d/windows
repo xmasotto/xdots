@@ -1,0 +1,33 @@
+#!/bin/bash
+
+alias msbuild="msbuild.exe"
+alias cargo="mingw cargo"
+alias pacman="msys pacman"
+alias configure="msys ./configure"
+alias make="msys make"
+
+function mingw {
+	echo "== Running command with MinGW binaries =="
+	OLD_PATH="$PATH"
+	PATH="/c/mingw/bin:$PATH"
+#	PATH="/c/msys64/mingw32/bin:$PATH"
+	export PATH
+	$*
+	PATH="$OLD_PATH"
+}
+
+function msys {
+	echo "== Running command in MSYS shell =="
+	OLD_PATH="$PATH"
+	PATH="/c/msys64/usr/local/bin:$PATH"
+	PATH="/c/msys64/usr/bin:$PATH"
+	PATH="/c/msys64/mingw32/bin:$PATH"
+	export PATH
+	bash -c "$*"
+	PATH="$OLD_PATH"
+}
+
+if [ "$(uname -o)" == "Msys" ]; then
+	export PYTHONPATH=$(cygpath -p "$PYTHONPATH" 2>/dev/null)
+	unset PYTHONHOME
+fi
