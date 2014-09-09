@@ -5,7 +5,7 @@ function xdots_setup() {
     xdots_teardown
 
     # Make symlinks to all conf_* directories in xdots
-    for f in `ls -d $HOME/xdots/conf_* | sed 's/^.*conf_\(.*\)/\1/g'`; do
+    for f in `ls -d $HOME/xdots/conf_* | sed 's/^.*conf_\(.*\)/\1/g' | sed 's/\/$//'`; do
 	ln -s "$HOME/xdots/conf_$f" "$HOME/$f"
     done
 
